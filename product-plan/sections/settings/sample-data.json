@@ -1,0 +1,89 @@
+{
+  "tabs": [
+    {
+      "id": "security",
+      "label": "Security",
+      "description": "Password and 2FA",
+      "icon": "lock"
+    },
+    {
+      "id": "notifications",
+      "label": "Notifications",
+      "description": "What you get pinged about",
+      "icon": "bell"
+    },
+    {
+      "id": "appearance",
+      "label": "Appearance",
+      "description": "Accent and sidebar default",
+      "icon": "palette"
+    },
+    {
+      "id": "data",
+      "label": "Data & privacy",
+      "description": "Export, cache, account deletion",
+      "icon": "shield"
+    }
+  ],
+  "activeTab": "security",
+  "security": {
+    "twoFactorEnabled": false,
+    "lastPasswordChangeAt": "2026-03-04T09:12:00Z"
+  },
+  "notificationPreferences": [
+    {
+      "id": "new_post",
+      "label": "New post alerts",
+      "description": "Ping me when any tracked profile publishes a new post.",
+      "enabled": true,
+      "icon": "sparkles"
+    },
+    {
+      "id": "follower_spike",
+      "label": "Follower spike alerts",
+      "description": "Notify me when a tracked profile picks up momentum (>10% velocity in an hour).",
+      "enabled": true,
+      "icon": "trending-up"
+    },
+    {
+      "id": "trending_hashtag",
+      "label": "Trending hashtag alerts",
+      "description": "Heads-up when a hashtag in your tracked content jumps the leaderboard.",
+      "enabled": false,
+      "icon": "hash"
+    },
+    {
+      "id": "weekly_report",
+      "label": "Weekly report email",
+      "description": "Monday-morning digest of the week's biggest movers across all tracked profiles.",
+      "enabled": true,
+      "icon": "mail"
+    }
+  ],
+  "accentOptions": [
+    {
+      "id": "violet",
+      "label": "Violet",
+      "hex": "#7C3AED"
+    },
+    {
+      "id": "cyan",
+      "label": "Cyan",
+      "hex": "#06B6D4"
+    },
+    {
+      "id": "rose",
+      "label": "Rose",
+      "hex": "#F43F5E"
+    },
+    {
+      "id": "amber",
+      "label": "Amber",
+      "hex": "#F59E0B"
+    }
+  ],
+  "appearance": {
+    "accentColor": "violet",
+    "sidebarStartsCollapsed": false
+  }
+}

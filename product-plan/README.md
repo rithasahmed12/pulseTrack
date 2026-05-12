@@ -1,0 +1,97 @@
+# PulseTrack — Design Handoff
+
+This folder contains everything needed to implement **PulseTrack**, a cross-platform Instagram + TikTok analytics platform for trend researchers and analysts.
+
+## What's Included
+
+**Ready-to-use prompts:**
+- `prompts/one-shot-prompt.md` — Prompt for full implementation in one session
+- `prompts/section-prompt.md` — Prompt template for section-by-section implementation
+
+**Instructions:**
+- `product-overview.md` — Product summary (provide with every implementation session)
+- `instructions/one-shot-instructions.md` — All 9 milestones combined for full implementation
+- `instructions/incremental/` — Milestone-by-milestone instructions:
+  - `01-shell.md` — Design tokens + app shell
+  - `02-authentication.md` — Login + signup
+  - `03-tracked-profiles.md` — Manage tracked IG/TikTok accounts
+  - `04-dashboard.md` — Home screen with stats + top posts + activity feed
+  - `05-profile-detail.md` — Hero analytics view (charts, donut, top post)
+  - `06-posts.md` — Unified feed with infinite scroll + detail modal
+  - `07-trending.md` — Velocity, hashtags, comparison, heatmap
+  - `08-app-profile.md` — Analyst's own account
+  - `09-settings.md` — Workspace preferences
+
+**Design assets:**
+- `design-system/` — `tokens.css` (CSS variables), `tailwind-colors.md`, `fonts.md`
+- `data-shapes/` — Per-section types + combined `overview.ts`
+- `shell/` — Application shell components (`AppShell`, `MainNav`, `UserMenu`)
+- `sections/` — Eight section packages, each with `README.md`, `tests.md`, props-based components, types, and realistic sample data
+
+## How to Use This
+
+### Option A: Incremental (recommended)
+
+Build milestone by milestone for tighter feedback loops:
+
+1. Copy the `product-plan/` folder into your implementation codebase
+2. Start with Shell — open `instructions/incremental/01-shell.md` and follow it (set up design tokens + the shell)
+3. For each subsequent section:
+   - Open `prompts/section-prompt.md`
+   - Fill in the variables at the top (SECTION_NAME, SECTION_ID, NN)
+   - Copy/paste into your coding agent
+   - Answer its clarifying questions
+   - Let it implement
+4. Review and test after each milestone before moving on
+
+### Option B: One-shot
+
+Build the whole app in one session:
+
+1. Copy `product-plan/` into your codebase
+2. Open `prompts/one-shot-prompt.md`
+3. Add any project-specific notes to the bottom of the prompt
+4. Copy/paste into your coding agent
+5. Answer its clarifying questions (tech stack, auth provider, scraping setup, etc.)
+6. Let the agent plan and implement all 9 milestones
+
+## Testing
+
+Each section includes a `tests.md` file with UI behavior test specs. They are **framework-agnostic** — describe WHAT to test (user flows, empty states, edge cases) rather than HOW.
+
+Adapt them to your stack:
+- **Vitest + React Testing Library** for unit + integration tests
+- **Playwright** or **Cypress** for full end-to-end flows
+- **Storybook + Chromatic** for visual regression of the components
+
+## Stack Recommendations
+
+The original PulseTrack design assumed:
+- **Frontend:** React 18 / 19 + Vite + Tailwind CSS v4 (the components are written for this combo but only depend on `react` and `lucide-react`)
+- **Backend:** NestJS + Passport JWT + Bull + Redis
+- **Database / Auth:** Supabase (Postgres + Auth + Realtime + Storage)
+- **Scraping:** Apify (`apify/instagram-scraper`, `clockworks/tiktok-scraper`)
+- **Monorepo:** pnpm workspaces
+
+You can substitute freely. The components are **props-based and framework-agnostic at the UI layer** — only the imports of `react` and `lucide-react` are hard dependencies.
+
+## Notable Implementation Notes
+
+- **Charts are inline SVG** — no Recharts / Visx / D3 dependency. Replace if you prefer a real chart lib.
+- **Glass-morphism surfaces** use `backdrop-blur-xl` over translucent panels (#0F0F18 at 85% opacity).
+- **Tabular numbers everywhere** — every numeric value uses `tabular-nums` for vertical alignment.
+- **Single accent (violet)** with cyan as a secondary; rose / amber / emerald used sparingly for functional state.
+- **Mono font** is JetBrains Mono — only used for eyebrows, kbd shortcuts, and tabular timestamps. Body and headings are Inter.
+- **The shell injects fonts** via `useEffect` so the components work standalone. For a real app, include the Google Fonts `<link>` in your HTML head.
+
+## Tips
+
+- **Use the pre-written prompts** — they prompt for important clarifying questions about your tech stack and requirements
+- **Add your own notes** — customize the prompts with project-specific context when needed
+- **Match callbacks to your router** — every navigation intent is fired as an `onXClick(value)` callback; wire to `router.push` (or your equivalent)
+- **Replace `thumbnailHue` with real CDN URLs** once your scraper persists media — the synthetic gradient is just a placeholder
+- **Review thoroughly** — check the plan and implementation carefully for product fit, edge cases, and consistency
+
+---
+
+*Generated by Design OS*

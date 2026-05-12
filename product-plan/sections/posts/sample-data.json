@@ -1,0 +1,1657 @@
+{
+  "filterControls": {
+    "postType": "all",
+    "platform": "both",
+    "dateRange": "30d",
+    "minEngagement": 0
+  },
+  "dateRangeOptions": [
+    {
+      "id": "24h",
+      "label": "Last 24h"
+    },
+    {
+      "id": "7d",
+      "label": "Last 7 days"
+    },
+    {
+      "id": "30d",
+      "label": "Last 30 days"
+    },
+    {
+      "id": "90d",
+      "label": "Last 90 days"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "pageSize": 12,
+    "hasMore": true
+  },
+  "posts": [
+    {
+      "id": "p_01",
+      "platform": "tiktok",
+      "profileUsername": "ortega.films",
+      "profileDisplayName": "Ortega Films",
+      "postType": "video",
+      "caption": "Forty seconds inside the abandoned drive-in we just bought.",
+      "hashtags": [
+        "#abandoned",
+        "#drivein",
+        "#shortdoc",
+        "#texas"
+      ],
+      "likes": 412800,
+      "comments": 8420,
+      "shares": 6210,
+      "saves": 14200,
+      "views": 4180000,
+      "engagementRate": 9.86,
+      "postedAt": "2026-05-10T18:24:00Z",
+      "thumbnailHue": 188,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 7.2
+        },
+        {
+          "day": 2,
+          "value": 8.4
+        },
+        {
+          "day": 3,
+          "value": 9.1
+        },
+        {
+          "day": 4,
+          "value": 9.6
+        },
+        {
+          "day": 5,
+          "value": 9.86
+        },
+        {
+          "day": 6,
+          "value": 9.7
+        },
+        {
+          "day": 7,
+          "value": 9.4
+        }
+      ]
+    },
+    {
+      "id": "p_02",
+      "platform": "tiktok",
+      "profileUsername": "vellum.notes",
+      "profileDisplayName": "Vellum Notes",
+      "postType": "video",
+      "caption": "The pen no one knows is actually $3.",
+      "hashtags": [
+        "#stationery",
+        "#pentest",
+        "#edc"
+      ],
+      "likes": 218000,
+      "comments": 12400,
+      "shares": 3120,
+      "saves": 31200,
+      "views": 2680000,
+      "engagementRate": 8.94,
+      "postedAt": "2026-05-09T13:11:00Z",
+      "thumbnailHue": 268,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 5.8
+        },
+        {
+          "day": 2,
+          "value": 7.1
+        },
+        {
+          "day": 3,
+          "value": 8.2
+        },
+        {
+          "day": 4,
+          "value": 8.94
+        },
+        {
+          "day": 5,
+          "value": 8.8
+        },
+        {
+          "day": 6,
+          "value": 8.4
+        },
+        {
+          "day": 7,
+          "value": 8
+        }
+      ]
+    },
+    {
+      "id": "p_03",
+      "platform": "instagram",
+      "profileUsername": "melodye.haus",
+      "profileDisplayName": "Melodye Haus",
+      "postType": "carousel",
+      "caption": "Live patch from last night — five slides.",
+      "hashtags": [
+        "#modular",
+        "#liveset",
+        "#audiovisual"
+      ],
+      "likes": 89200,
+      "comments": 1840,
+      "shares": 0,
+      "saves": 6120,
+      "views": 0,
+      "engagementRate": 7.45,
+      "postedAt": "2026-05-11T20:42:00Z",
+      "thumbnailHue": 285,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 5.1
+        },
+        {
+          "day": 2,
+          "value": 6.3
+        },
+        {
+          "day": 3,
+          "value": 7
+        },
+        {
+          "day": 4,
+          "value": 7.45
+        },
+        {
+          "day": 5,
+          "value": 7.4
+        },
+        {
+          "day": 6,
+          "value": 7.1
+        },
+        {
+          "day": 7,
+          "value": 6.8
+        }
+      ]
+    },
+    {
+      "id": "p_04",
+      "platform": "instagram",
+      "profileUsername": "north.kiln",
+      "profileDisplayName": "North Kiln Ceramics",
+      "postType": "photo",
+      "caption": "Drop drops Tuesday — slip-cast bud vases, six only.",
+      "hashtags": [
+        "#ceramics",
+        "#wheelthrown",
+        "#smallbatch"
+      ],
+      "likes": 22400,
+      "comments": 612,
+      "shares": 0,
+      "saves": 1820,
+      "views": 0,
+      "engagementRate": 6.81,
+      "postedAt": "2026-05-12T09:58:00Z",
+      "thumbnailHue": 202,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 6.8
+        },
+        {
+          "day": 2,
+          "value": 6.6
+        },
+        {
+          "day": 3,
+          "value": 6.5
+        },
+        {
+          "day": 4,
+          "value": 6.4
+        },
+        {
+          "day": 5,
+          "value": 6.2
+        },
+        {
+          "day": 6,
+          "value": 6.1
+        },
+        {
+          "day": 7,
+          "value": 6
+        }
+      ]
+    },
+    {
+      "id": "p_05",
+      "platform": "instagram",
+      "profileUsername": "dust.archive",
+      "profileDisplayName": "Dust Archive",
+      "postType": "carousel",
+      "caption": "Submitted by a follower: 1972, San Antonio commercial photographer's contact sheet.",
+      "hashtags": [
+        "#archive",
+        "#1970s",
+        "#commercialphotography",
+        "#texas"
+      ],
+      "likes": 41200,
+      "comments": 920,
+      "shares": 0,
+      "saves": 4810,
+      "views": 0,
+      "engagementRate": 6.42,
+      "postedAt": "2026-05-10T11:30:00Z",
+      "thumbnailHue": 34,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 4.2
+        },
+        {
+          "day": 2,
+          "value": 5.4
+        },
+        {
+          "day": 3,
+          "value": 6
+        },
+        {
+          "day": 4,
+          "value": 6.42
+        },
+        {
+          "day": 5,
+          "value": 6.3
+        },
+        {
+          "day": 6,
+          "value": 6
+        },
+        {
+          "day": 7,
+          "value": 5.8
+        }
+      ]
+    },
+    {
+      "id": "p_06",
+      "platform": "tiktok",
+      "profileUsername": "linen.season",
+      "profileDisplayName": "Linen Season",
+      "postType": "video",
+      "caption": "Three ways to wear the camp shirt this summer.",
+      "hashtags": [
+        "#linenseason",
+        "#slowfashion",
+        "#summerstyle"
+      ],
+      "likes": 64800,
+      "comments": 2120,
+      "shares": 1820,
+      "saves": 5210,
+      "views": 1140000,
+      "engagementRate": 5.97,
+      "postedAt": "2026-05-09T16:08:00Z",
+      "thumbnailHue": 348,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 3.4
+        },
+        {
+          "day": 2,
+          "value": 4.6
+        },
+        {
+          "day": 3,
+          "value": 5.4
+        },
+        {
+          "day": 4,
+          "value": 5.97
+        },
+        {
+          "day": 5,
+          "value": 5.9
+        },
+        {
+          "day": 6,
+          "value": 5.6
+        },
+        {
+          "day": 7,
+          "value": 5.3
+        }
+      ]
+    },
+    {
+      "id": "p_07",
+      "platform": "instagram",
+      "profileUsername": "melodye.haus",
+      "profileDisplayName": "Melodye Haus",
+      "postType": "reel",
+      "caption": "Modular bass cycle through a granular delay — 18s.",
+      "hashtags": [
+        "#modular",
+        "#granular",
+        "#audiovisual"
+      ],
+      "likes": 124000,
+      "comments": 2410,
+      "shares": 980,
+      "saves": 9420,
+      "views": 1820000,
+      "engagementRate": 8.94,
+      "postedAt": "2026-05-08T16:14:00Z",
+      "thumbnailHue": 252,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 6.2
+        },
+        {
+          "day": 2,
+          "value": 7.4
+        },
+        {
+          "day": 3,
+          "value": 8.5
+        },
+        {
+          "day": 4,
+          "value": 8.94
+        },
+        {
+          "day": 5,
+          "value": 8.8
+        },
+        {
+          "day": 6,
+          "value": 8.5
+        },
+        {
+          "day": 7,
+          "value": 8.1
+        }
+      ]
+    },
+    {
+      "id": "p_08",
+      "platform": "instagram",
+      "profileUsername": "ridge.coffee",
+      "profileDisplayName": "Ridge Coffee Co.",
+      "postType": "photo",
+      "caption": "New roast: Ethiopia Yirgacheffe. Jasmine, bergamot, white grape.",
+      "hashtags": [
+        "#singleorigin",
+        "#coffeeroaster",
+        "#yirgacheffe"
+      ],
+      "likes": 3120,
+      "comments": 84,
+      "shares": 0,
+      "saves": 218,
+      "views": 0,
+      "engagementRate": 3.84,
+      "postedAt": "2026-05-08T08:00:00Z",
+      "thumbnailHue": 22,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 3.6
+        },
+        {
+          "day": 2,
+          "value": 3.84
+        },
+        {
+          "day": 3,
+          "value": 3.8
+        },
+        {
+          "day": 4,
+          "value": 3.7
+        },
+        {
+          "day": 5,
+          "value": 3.5
+        },
+        {
+          "day": 6,
+          "value": 3.4
+        },
+        {
+          "day": 7,
+          "value": 3.2
+        }
+      ]
+    },
+    {
+      "id": "p_09",
+      "platform": "tiktok",
+      "profileUsername": "ortega.films",
+      "profileDisplayName": "Ortega Films",
+      "postType": "video",
+      "caption": "How we lit the diner scene at 2 AM with one practical and a $30 LED.",
+      "hashtags": [
+        "#filmmaking",
+        "#lighting",
+        "#bts"
+      ],
+      "likes": 184000,
+      "comments": 4920,
+      "shares": 2120,
+      "saves": 18200,
+      "views": 2240000,
+      "engagementRate": 8.21,
+      "postedAt": "2026-05-07T14:38:00Z",
+      "thumbnailHue": 222,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 5.4
+        },
+        {
+          "day": 2,
+          "value": 6.8
+        },
+        {
+          "day": 3,
+          "value": 7.8
+        },
+        {
+          "day": 4,
+          "value": 8.21
+        },
+        {
+          "day": 5,
+          "value": 8.1
+        },
+        {
+          "day": 6,
+          "value": 7.8
+        },
+        {
+          "day": 7,
+          "value": 7.5
+        }
+      ]
+    },
+    {
+      "id": "p_10",
+      "platform": "instagram",
+      "profileUsername": "hollow.set",
+      "profileDisplayName": "Hollow Set",
+      "postType": "carousel",
+      "caption": "Standing set for a music video — built in 36 hours, struck in 3.",
+      "hashtags": [
+        "#setdesign",
+        "#productiondesign",
+        "#musicvideo"
+      ],
+      "likes": 12400,
+      "comments": 248,
+      "shares": 0,
+      "saves": 1820,
+      "views": 0,
+      "engagementRate": 5.12,
+      "postedAt": "2026-05-06T19:22:00Z",
+      "thumbnailHue": 312,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 3.2
+        },
+        {
+          "day": 2,
+          "value": 4.4
+        },
+        {
+          "day": 3,
+          "value": 4.9
+        },
+        {
+          "day": 4,
+          "value": 5.12
+        },
+        {
+          "day": 5,
+          "value": 5
+        },
+        {
+          "day": 6,
+          "value": 4.7
+        },
+        {
+          "day": 7,
+          "value": 4.4
+        }
+      ]
+    },
+    {
+      "id": "p_11",
+      "platform": "instagram",
+      "profileUsername": "dust.archive",
+      "profileDisplayName": "Dust Archive",
+      "postType": "photo",
+      "caption": "Hasselblad neg, Detroit, 1988. Photographer unknown.",
+      "hashtags": [
+        "#hasselblad",
+        "#1980s",
+        "#archive"
+      ],
+      "likes": 18200,
+      "comments": 412,
+      "shares": 0,
+      "saves": 2120,
+      "views": 0,
+      "engagementRate": 5.84,
+      "postedAt": "2026-05-06T10:00:00Z",
+      "thumbnailHue": 42,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 4.1
+        },
+        {
+          "day": 2,
+          "value": 5
+        },
+        {
+          "day": 3,
+          "value": 5.5
+        },
+        {
+          "day": 4,
+          "value": 5.84
+        },
+        {
+          "day": 5,
+          "value": 5.7
+        },
+        {
+          "day": 6,
+          "value": 5.4
+        },
+        {
+          "day": 7,
+          "value": 5.1
+        }
+      ]
+    },
+    {
+      "id": "p_12",
+      "platform": "tiktok",
+      "profileUsername": "vellum.notes",
+      "profileDisplayName": "Vellum Notes",
+      "postType": "video",
+      "caption": "Why the Tombow Mono 100 is genuinely the best pencil under $5.",
+      "hashtags": [
+        "#pencil",
+        "#stationery",
+        "#review"
+      ],
+      "likes": 81200,
+      "comments": 3140,
+      "shares": 1240,
+      "saves": 9820,
+      "views": 1080000,
+      "engagementRate": 7.84,
+      "postedAt": "2026-05-05T11:48:00Z",
+      "thumbnailHue": 38,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 5.2
+        },
+        {
+          "day": 2,
+          "value": 6.4
+        },
+        {
+          "day": 3,
+          "value": 7.2
+        },
+        {
+          "day": 4,
+          "value": 7.84
+        },
+        {
+          "day": 5,
+          "value": 7.7
+        },
+        {
+          "day": 6,
+          "value": 7.4
+        },
+        {
+          "day": 7,
+          "value": 7
+        }
+      ]
+    },
+    {
+      "id": "p_13",
+      "platform": "instagram",
+      "profileUsername": "melodye.haus",
+      "profileDisplayName": "Melodye Haus",
+      "postType": "photo",
+      "caption": "Studio rebuild, week two.",
+      "hashtags": [
+        "#studio",
+        "#workinprogress"
+      ],
+      "likes": 18400,
+      "comments": 312,
+      "shares": 0,
+      "saves": 821,
+      "views": 0,
+      "engagementRate": 4.18,
+      "postedAt": "2026-05-06T09:22:00Z",
+      "thumbnailHue": 198,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 3.4
+        },
+        {
+          "day": 2,
+          "value": 4
+        },
+        {
+          "day": 3,
+          "value": 4.18
+        },
+        {
+          "day": 4,
+          "value": 4.1
+        },
+        {
+          "day": 5,
+          "value": 3.9
+        },
+        {
+          "day": 6,
+          "value": 3.7
+        },
+        {
+          "day": 7,
+          "value": 3.5
+        }
+      ]
+    },
+    {
+      "id": "p_14",
+      "platform": "instagram",
+      "profileUsername": "north.kiln",
+      "profileDisplayName": "North Kiln Ceramics",
+      "postType": "carousel",
+      "caption": "Inside the kiln after firing 32 — six fades, two cracks, twenty-four ready.",
+      "hashtags": [
+        "#kilnfiring",
+        "#stoneware",
+        "#process"
+      ],
+      "likes": 14200,
+      "comments": 312,
+      "shares": 0,
+      "saves": 942,
+      "views": 0,
+      "engagementRate": 7.21,
+      "postedAt": "2026-05-04T15:10:00Z",
+      "thumbnailHue": 174,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 5.4
+        },
+        {
+          "day": 2,
+          "value": 6.4
+        },
+        {
+          "day": 3,
+          "value": 7
+        },
+        {
+          "day": 4,
+          "value": 7.21
+        },
+        {
+          "day": 5,
+          "value": 7.1
+        },
+        {
+          "day": 6,
+          "value": 6.8
+        },
+        {
+          "day": 7,
+          "value": 6.4
+        }
+      ]
+    },
+    {
+      "id": "p_15",
+      "platform": "tiktok",
+      "profileUsername": "linen.season",
+      "profileDisplayName": "Linen Season",
+      "postType": "video",
+      "caption": "We dyed a hundred meters of linen in beet juice. Here's how it turned out.",
+      "hashtags": [
+        "#naturaldye",
+        "#beetdye",
+        "#textile"
+      ],
+      "likes": 38400,
+      "comments": 1140,
+      "shares": 820,
+      "saves": 4120,
+      "views": 680000,
+      "engagementRate": 6.34,
+      "postedAt": "2026-05-04T13:00:00Z",
+      "thumbnailHue": 358,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 4.1
+        },
+        {
+          "day": 2,
+          "value": 5.2
+        },
+        {
+          "day": 3,
+          "value": 6
+        },
+        {
+          "day": 4,
+          "value": 6.34
+        },
+        {
+          "day": 5,
+          "value": 6.2
+        },
+        {
+          "day": 6,
+          "value": 5.9
+        },
+        {
+          "day": 7,
+          "value": 5.6
+        }
+      ]
+    },
+    {
+      "id": "p_16",
+      "platform": "instagram",
+      "profileUsername": "ridge.coffee",
+      "profileDisplayName": "Ridge Coffee Co.",
+      "postType": "carousel",
+      "caption": "Subscription cards for the May box. Mailed Tuesday.",
+      "hashtags": [
+        "#coffeesubscription",
+        "#smallroaster"
+      ],
+      "likes": 1820,
+      "comments": 41,
+      "shares": 0,
+      "saves": 120,
+      "views": 0,
+      "engagementRate": 2.18,
+      "postedAt": "2026-05-03T08:00:00Z",
+      "thumbnailHue": 64,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 2
+        },
+        {
+          "day": 2,
+          "value": 2.18
+        },
+        {
+          "day": 3,
+          "value": 2.1
+        },
+        {
+          "day": 4,
+          "value": 2
+        },
+        {
+          "day": 5,
+          "value": 1.9
+        },
+        {
+          "day": 6,
+          "value": 1.8
+        },
+        {
+          "day": 7,
+          "value": 1.7
+        }
+      ]
+    },
+    {
+      "id": "p_17",
+      "platform": "instagram",
+      "profileUsername": "melodye.haus",
+      "profileDisplayName": "Melodye Haus",
+      "postType": "carousel",
+      "caption": "Six FM operator presets I'm shipping next week.",
+      "hashtags": [
+        "#fmsynthesis",
+        "#presets",
+        "#sounddesign"
+      ],
+      "likes": 52100,
+      "comments": 1140,
+      "shares": 0,
+      "saves": 4280,
+      "views": 0,
+      "engagementRate": 6.21,
+      "postedAt": "2026-05-04T18:00:00Z",
+      "thumbnailHue": 320,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 4.2
+        },
+        {
+          "day": 2,
+          "value": 5.4
+        },
+        {
+          "day": 3,
+          "value": 6
+        },
+        {
+          "day": 4,
+          "value": 6.21
+        },
+        {
+          "day": 5,
+          "value": 6
+        },
+        {
+          "day": 6,
+          "value": 5.7
+        },
+        {
+          "day": 7,
+          "value": 5.4
+        }
+      ]
+    },
+    {
+      "id": "p_18",
+      "platform": "tiktok",
+      "profileUsername": "ortega.films",
+      "profileDisplayName": "Ortega Films",
+      "postType": "video",
+      "caption": "Mini-doc trailer drops Friday. One man, one workshop, sixty years.",
+      "hashtags": [
+        "#shortdoc",
+        "#trailer",
+        "#independentfilm"
+      ],
+      "likes": 92400,
+      "comments": 2840,
+      "shares": 1820,
+      "saves": 9820,
+      "views": 1480000,
+      "engagementRate": 7.42,
+      "postedAt": "2026-05-03T17:48:00Z",
+      "thumbnailHue": 168,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 5.2
+        },
+        {
+          "day": 2,
+          "value": 6.2
+        },
+        {
+          "day": 3,
+          "value": 7
+        },
+        {
+          "day": 4,
+          "value": 7.42
+        },
+        {
+          "day": 5,
+          "value": 7.3
+        },
+        {
+          "day": 6,
+          "value": 7
+        },
+        {
+          "day": 7,
+          "value": 6.6
+        }
+      ]
+    },
+    {
+      "id": "p_19",
+      "platform": "instagram",
+      "profileUsername": "hollow.set",
+      "profileDisplayName": "Hollow Set",
+      "postType": "photo",
+      "caption": "Mood reference for next month's job.",
+      "hashtags": [
+        "#moodboard",
+        "#productiondesign"
+      ],
+      "likes": 4820,
+      "comments": 112,
+      "shares": 0,
+      "saves": 612,
+      "views": 0,
+      "engagementRate": 3.42,
+      "postedAt": "2026-05-02T11:20:00Z",
+      "thumbnailHue": 286,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 2.4
+        },
+        {
+          "day": 2,
+          "value": 3
+        },
+        {
+          "day": 3,
+          "value": 3.3
+        },
+        {
+          "day": 4,
+          "value": 3.42
+        },
+        {
+          "day": 5,
+          "value": 3.3
+        },
+        {
+          "day": 6,
+          "value": 3.1
+        },
+        {
+          "day": 7,
+          "value": 2.9
+        }
+      ]
+    },
+    {
+      "id": "p_20",
+      "platform": "instagram",
+      "profileUsername": "melodye.haus",
+      "profileDisplayName": "Melodye Haus",
+      "postType": "reel",
+      "caption": "Quick walkthrough of the live setup.",
+      "hashtags": [
+        "#liveset",
+        "#modular",
+        "#walkthrough"
+      ],
+      "likes": 71200,
+      "comments": 1820,
+      "shares": 612,
+      "saves": 5410,
+      "views": 980000,
+      "engagementRate": 7.12,
+      "postedAt": "2026-05-02T21:30:00Z",
+      "thumbnailHue": 156,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 4.6
+        },
+        {
+          "day": 2,
+          "value": 5.8
+        },
+        {
+          "day": 3,
+          "value": 6.7
+        },
+        {
+          "day": 4,
+          "value": 7.12
+        },
+        {
+          "day": 5,
+          "value": 7
+        },
+        {
+          "day": 6,
+          "value": 6.7
+        },
+        {
+          "day": 7,
+          "value": 6.3
+        }
+      ]
+    },
+    {
+      "id": "p_21",
+      "platform": "tiktok",
+      "profileUsername": "vellum.notes",
+      "profileDisplayName": "Vellum Notes",
+      "postType": "video",
+      "caption": "Three notebooks, ranked. Final answer.",
+      "hashtags": [
+        "#notebooks",
+        "#stationery",
+        "#ranking"
+      ],
+      "likes": 121000,
+      "comments": 4820,
+      "shares": 2120,
+      "saves": 18400,
+      "views": 1840000,
+      "engagementRate": 8.12,
+      "postedAt": "2026-05-01T12:00:00Z",
+      "thumbnailHue": 218,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 5.6
+        },
+        {
+          "day": 2,
+          "value": 6.8
+        },
+        {
+          "day": 3,
+          "value": 7.6
+        },
+        {
+          "day": 4,
+          "value": 8.12
+        },
+        {
+          "day": 5,
+          "value": 8
+        },
+        {
+          "day": 6,
+          "value": 7.7
+        },
+        {
+          "day": 7,
+          "value": 7.3
+        }
+      ]
+    },
+    {
+      "id": "p_22",
+      "platform": "instagram",
+      "profileUsername": "north.kiln",
+      "profileDisplayName": "North Kiln Ceramics",
+      "postType": "photo",
+      "caption": "Cup #28. Last in this glaze. Available 10 AM ET tomorrow.",
+      "hashtags": [
+        "#wheelthrown",
+        "#shopupdate"
+      ],
+      "likes": 12400,
+      "comments": 318,
+      "shares": 0,
+      "saves": 712,
+      "views": 0,
+      "engagementRate": 8.42,
+      "postedAt": "2026-05-01T14:00:00Z",
+      "thumbnailHue": 102,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 6.4
+        },
+        {
+          "day": 2,
+          "value": 7.6
+        },
+        {
+          "day": 3,
+          "value": 8.2
+        },
+        {
+          "day": 4,
+          "value": 8.42
+        },
+        {
+          "day": 5,
+          "value": 8.3
+        },
+        {
+          "day": 6,
+          "value": 8
+        },
+        {
+          "day": 7,
+          "value": 7.6
+        }
+      ]
+    },
+    {
+      "id": "p_23",
+      "platform": "instagram",
+      "profileUsername": "dust.archive",
+      "profileDisplayName": "Dust Archive",
+      "postType": "carousel",
+      "caption": "Anonymous portfolio, found in a Chicago thrift store last weekend. Three rolls of 120 film.",
+      "hashtags": [
+        "#archive",
+        "#mediumformat",
+        "#foundphotography"
+      ],
+      "likes": 38400,
+      "comments": 820,
+      "shares": 0,
+      "saves": 5210,
+      "views": 0,
+      "engagementRate": 7.21,
+      "postedAt": "2026-04-30T13:00:00Z",
+      "thumbnailHue": 48,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 4.8
+        },
+        {
+          "day": 2,
+          "value": 6
+        },
+        {
+          "day": 3,
+          "value": 6.8
+        },
+        {
+          "day": 4,
+          "value": 7.21
+        },
+        {
+          "day": 5,
+          "value": 7.1
+        },
+        {
+          "day": 6,
+          "value": 6.8
+        },
+        {
+          "day": 7,
+          "value": 6.4
+        }
+      ]
+    },
+    {
+      "id": "p_24",
+      "platform": "tiktok",
+      "profileUsername": "linen.season",
+      "profileDisplayName": "Linen Season",
+      "postType": "video",
+      "caption": "Folding shirts the only way they should be folded.",
+      "hashtags": [
+        "#linenseason",
+        "#folding"
+      ],
+      "likes": 28400,
+      "comments": 612,
+      "shares": 312,
+      "saves": 2820,
+      "views": 482000,
+      "engagementRate": 5.42,
+      "postedAt": "2026-04-29T18:30:00Z",
+      "thumbnailHue": 12,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 3.4
+        },
+        {
+          "day": 2,
+          "value": 4.4
+        },
+        {
+          "day": 3,
+          "value": 5.1
+        },
+        {
+          "day": 4,
+          "value": 5.42
+        },
+        {
+          "day": 5,
+          "value": 5.3
+        },
+        {
+          "day": 6,
+          "value": 5
+        },
+        {
+          "day": 7,
+          "value": 4.7
+        }
+      ]
+    },
+    {
+      "id": "p_25",
+      "platform": "instagram",
+      "profileUsername": "ridge.coffee",
+      "profileDisplayName": "Ridge Coffee Co.",
+      "postType": "video",
+      "caption": "60s on the cupping table. Three coffees, blind.",
+      "hashtags": [
+        "#cupping",
+        "#coffeeroaster"
+      ],
+      "likes": 2820,
+      "comments": 84,
+      "shares": 41,
+      "saves": 218,
+      "views": 38400,
+      "engagementRate": 3.18,
+      "postedAt": "2026-04-28T09:00:00Z",
+      "thumbnailHue": 28,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 2.8
+        },
+        {
+          "day": 2,
+          "value": 3
+        },
+        {
+          "day": 3,
+          "value": 3.18
+        },
+        {
+          "day": 4,
+          "value": 3.1
+        },
+        {
+          "day": 5,
+          "value": 2.9
+        },
+        {
+          "day": 6,
+          "value": 2.7
+        },
+        {
+          "day": 7,
+          "value": 2.5
+        }
+      ]
+    },
+    {
+      "id": "p_26",
+      "platform": "tiktok",
+      "profileUsername": "ortega.films",
+      "profileDisplayName": "Ortega Films",
+      "postType": "video",
+      "caption": "Found a 1971 Kodak K-100 at an estate sale. Loaded it tonight.",
+      "hashtags": [
+        "#16mm",
+        "#filmmaking",
+        "#kodakk100"
+      ],
+      "likes": 142000,
+      "comments": 3820,
+      "shares": 1240,
+      "saves": 12400,
+      "views": 1820000,
+      "engagementRate": 7.96,
+      "postedAt": "2026-04-27T22:14:00Z",
+      "thumbnailHue": 248,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 5.4
+        },
+        {
+          "day": 2,
+          "value": 6.6
+        },
+        {
+          "day": 3,
+          "value": 7.4
+        },
+        {
+          "day": 4,
+          "value": 7.96
+        },
+        {
+          "day": 5,
+          "value": 7.8
+        },
+        {
+          "day": 6,
+          "value": 7.5
+        },
+        {
+          "day": 7,
+          "value": 7.1
+        }
+      ]
+    },
+    {
+      "id": "p_27",
+      "platform": "instagram",
+      "profileUsername": "hollow.set",
+      "profileDisplayName": "Hollow Set",
+      "postType": "carousel",
+      "caption": "Last week's build, three angles.",
+      "hashtags": [
+        "#setdesign",
+        "#bts"
+      ],
+      "likes": 8400,
+      "comments": 184,
+      "shares": 0,
+      "saves": 920,
+      "views": 0,
+      "engagementRate": 4.18,
+      "postedAt": "2026-04-26T10:30:00Z",
+      "thumbnailHue": 296,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 2.8
+        },
+        {
+          "day": 2,
+          "value": 3.6
+        },
+        {
+          "day": 3,
+          "value": 4
+        },
+        {
+          "day": 4,
+          "value": 4.18
+        },
+        {
+          "day": 5,
+          "value": 4
+        },
+        {
+          "day": 6,
+          "value": 3.8
+        },
+        {
+          "day": 7,
+          "value": 3.5
+        }
+      ]
+    },
+    {
+      "id": "p_28",
+      "platform": "tiktok",
+      "profileUsername": "vellum.notes",
+      "profileDisplayName": "Vellum Notes",
+      "postType": "video",
+      "caption": "The fountain pen everyone says is overrated. Test below.",
+      "hashtags": [
+        "#fountainpen",
+        "#pentest"
+      ],
+      "likes": 38400,
+      "comments": 1820,
+      "shares": 412,
+      "saves": 2820,
+      "views": 482000,
+      "engagementRate": 6.84,
+      "postedAt": "2026-04-25T13:00:00Z",
+      "thumbnailHue": 192,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 4.2
+        },
+        {
+          "day": 2,
+          "value": 5.4
+        },
+        {
+          "day": 3,
+          "value": 6.2
+        },
+        {
+          "day": 4,
+          "value": 6.84
+        },
+        {
+          "day": 5,
+          "value": 6.7
+        },
+        {
+          "day": 6,
+          "value": 6.3
+        },
+        {
+          "day": 7,
+          "value": 5.9
+        }
+      ]
+    },
+    {
+      "id": "p_29",
+      "platform": "instagram",
+      "profileUsername": "melodye.haus",
+      "profileDisplayName": "Melodye Haus",
+      "postType": "carousel",
+      "caption": "Reading list for the next sound design course. Five books.",
+      "hashtags": [
+        "#sounddesign",
+        "#readinglist"
+      ],
+      "likes": 18400,
+      "comments": 412,
+      "shares": 0,
+      "saves": 2120,
+      "views": 0,
+      "engagementRate": 5.42,
+      "postedAt": "2026-04-24T16:00:00Z",
+      "thumbnailHue": 274,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 3.4
+        },
+        {
+          "day": 2,
+          "value": 4.4
+        },
+        {
+          "day": 3,
+          "value": 5.1
+        },
+        {
+          "day": 4,
+          "value": 5.42
+        },
+        {
+          "day": 5,
+          "value": 5.3
+        },
+        {
+          "day": 6,
+          "value": 5
+        },
+        {
+          "day": 7,
+          "value": 4.7
+        }
+      ]
+    },
+    {
+      "id": "p_30",
+      "platform": "instagram",
+      "profileUsername": "north.kiln",
+      "profileDisplayName": "North Kiln Ceramics",
+      "postType": "carousel",
+      "caption": "Glaze tests, batch 14. Recipes in the caption.",
+      "hashtags": [
+        "#glaze",
+        "#ceramicstudio",
+        "#kilntested"
+      ],
+      "likes": 9820,
+      "comments": 248,
+      "shares": 0,
+      "saves": 712,
+      "views": 0,
+      "engagementRate": 6.84,
+      "postedAt": "2026-04-23T11:00:00Z",
+      "thumbnailHue": 138,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 4.8
+        },
+        {
+          "day": 2,
+          "value": 6
+        },
+        {
+          "day": 3,
+          "value": 6.6
+        },
+        {
+          "day": 4,
+          "value": 6.84
+        },
+        {
+          "day": 5,
+          "value": 6.7
+        },
+        {
+          "day": 6,
+          "value": 6.4
+        },
+        {
+          "day": 7,
+          "value": 6
+        }
+      ]
+    },
+    {
+      "id": "p_31",
+      "platform": "instagram",
+      "profileUsername": "dust.archive",
+      "profileDisplayName": "Dust Archive",
+      "postType": "photo",
+      "caption": "Polaroid SX-70, 1976. Detroit waterfront.",
+      "hashtags": [
+        "#polaroid",
+        "#sx70",
+        "#archive"
+      ],
+      "likes": 21200,
+      "comments": 412,
+      "shares": 0,
+      "saves": 2410,
+      "views": 0,
+      "engagementRate": 6.12,
+      "postedAt": "2026-04-22T19:00:00Z",
+      "thumbnailHue": 16,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 4.2
+        },
+        {
+          "day": 2,
+          "value": 5.2
+        },
+        {
+          "day": 3,
+          "value": 5.8
+        },
+        {
+          "day": 4,
+          "value": 6.12
+        },
+        {
+          "day": 5,
+          "value": 6
+        },
+        {
+          "day": 6,
+          "value": 5.7
+        },
+        {
+          "day": 7,
+          "value": 5.4
+        }
+      ]
+    },
+    {
+      "id": "p_32",
+      "platform": "tiktok",
+      "profileUsername": "linen.season",
+      "profileDisplayName": "Linen Season",
+      "postType": "video",
+      "caption": "Why we don't do black. A short rant.",
+      "hashtags": [
+        "#linenseason",
+        "#slowfashion"
+      ],
+      "likes": 18400,
+      "comments": 2820,
+      "shares": 312,
+      "saves": 1820,
+      "views": 281000,
+      "engagementRate": 7.64,
+      "postedAt": "2026-04-21T15:30:00Z",
+      "thumbnailHue": 8,
+      "engagementOverTime": [
+        {
+          "day": 1,
+          "value": 5
+        },
+        {
+          "day": 2,
+          "value": 6.2
+        },
+        {
+          "day": 3,
+          "value": 7
+        },
+        {
+          "day": 4,
+          "value": 7.64
+        },
+        {
+          "day": 5,
+          "value": 7.5
+        },
+        {
+          "day": 6,
+          "value": 7.1
+        },
+        {
+          "day": 7,
+          "value": 6.7
+        }
+      ]
+    }
+  ]
+}

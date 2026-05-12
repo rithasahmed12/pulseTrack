@@ -1,0 +1,1165 @@
+{
+  "trendingPosts": [
+    {
+      "id": "p_01",
+      "platform": "tiktok",
+      "profileUsername": "ortega.films",
+      "profileDisplayName": "Ortega Films",
+      "caption": "Forty seconds inside the abandoned drive-in we just bought.",
+      "engagementRate": 9.86,
+      "velocityPercent": 312,
+      "thumbnailHue": 188,
+      "postedAt": "2026-05-10T18:24:00Z"
+    },
+    {
+      "id": "p_07",
+      "platform": "instagram",
+      "profileUsername": "melodye.haus",
+      "profileDisplayName": "Melodye Haus",
+      "caption": "Modular bass cycle through a granular delay — 18s.",
+      "engagementRate": 8.94,
+      "velocityPercent": 218,
+      "thumbnailHue": 252,
+      "postedAt": "2026-05-08T16:14:00Z"
+    },
+    {
+      "id": "p_21",
+      "platform": "tiktok",
+      "profileUsername": "vellum.notes",
+      "profileDisplayName": "Vellum Notes",
+      "caption": "Three notebooks, ranked. Final answer.",
+      "engagementRate": 8.12,
+      "velocityPercent": 184,
+      "thumbnailHue": 218,
+      "postedAt": "2026-05-01T12:00:00Z"
+    },
+    {
+      "id": "p_09",
+      "platform": "tiktok",
+      "profileUsername": "ortega.films",
+      "profileDisplayName": "Ortega Films",
+      "caption": "How we lit the diner scene at 2 AM with one practical and a $30 LED.",
+      "engagementRate": 8.21,
+      "velocityPercent": 142,
+      "thumbnailHue": 222,
+      "postedAt": "2026-05-07T14:38:00Z"
+    },
+    {
+      "id": "p_02",
+      "platform": "tiktok",
+      "profileUsername": "vellum.notes",
+      "profileDisplayName": "Vellum Notes",
+      "caption": "The pen no one knows is actually $3.",
+      "engagementRate": 8.94,
+      "velocityPercent": 121,
+      "thumbnailHue": 268,
+      "postedAt": "2026-05-09T13:11:00Z"
+    },
+    {
+      "id": "p_22",
+      "platform": "instagram",
+      "profileUsername": "north.kiln",
+      "profileDisplayName": "North Kiln Ceramics",
+      "caption": "Cup #28. Last in this glaze. Available 10 AM ET tomorrow.",
+      "engagementRate": 8.42,
+      "velocityPercent": 96,
+      "thumbnailHue": 102,
+      "postedAt": "2026-05-01T14:00:00Z"
+    },
+    {
+      "id": "p_18",
+      "platform": "tiktok",
+      "profileUsername": "ortega.films",
+      "profileDisplayName": "Ortega Films",
+      "caption": "Mini-doc trailer drops Friday. One man, one workshop, sixty years.",
+      "engagementRate": 7.42,
+      "velocityPercent": 74,
+      "thumbnailHue": 168,
+      "postedAt": "2026-05-03T17:48:00Z"
+    },
+    {
+      "id": "p_03",
+      "platform": "instagram",
+      "profileUsername": "melodye.haus",
+      "profileDisplayName": "Melodye Haus",
+      "caption": "Live patch from last night — five slides.",
+      "engagementRate": 7.45,
+      "velocityPercent": 52,
+      "thumbnailHue": 285,
+      "postedAt": "2026-05-11T20:42:00Z"
+    },
+    {
+      "id": "p_12",
+      "platform": "tiktok",
+      "profileUsername": "vellum.notes",
+      "profileDisplayName": "Vellum Notes",
+      "caption": "Why the Tombow Mono 100 is genuinely the best pencil under $5.",
+      "engagementRate": 7.84,
+      "velocityPercent": 41,
+      "thumbnailHue": 38,
+      "postedAt": "2026-05-05T11:48:00Z"
+    },
+    {
+      "id": "p_05",
+      "platform": "instagram",
+      "profileUsername": "dust.archive",
+      "profileDisplayName": "Dust Archive",
+      "caption": "Submitted by a follower: 1972, San Antonio commercial photographer's contact sheet.",
+      "engagementRate": 6.42,
+      "velocityPercent": 28,
+      "thumbnailHue": 34,
+      "postedAt": "2026-05-10T11:30:00Z"
+    }
+  ],
+  "trendingHashtags": [
+    {
+      "tag": "#linenseason",
+      "usageCount": 1820,
+      "growthPercent": 312,
+      "weight": 1
+    },
+    {
+      "tag": "#shortdoc",
+      "usageCount": 1240,
+      "growthPercent": 184,
+      "weight": 0.78
+    },
+    {
+      "tag": "#wheelthrown",
+      "usageCount": 982,
+      "growthPercent": 142,
+      "weight": 0.68
+    },
+    {
+      "tag": "#modular",
+      "usageCount": 884,
+      "growthPercent": 96,
+      "weight": 0.62
+    },
+    {
+      "tag": "#stationery",
+      "usageCount": 812,
+      "growthPercent": 74,
+      "weight": 0.58
+    },
+    {
+      "tag": "#archive",
+      "usageCount": 728,
+      "growthPercent": 52,
+      "weight": 0.54
+    },
+    {
+      "tag": "#16mm",
+      "usageCount": 612,
+      "growthPercent": 48,
+      "weight": 0.48
+    },
+    {
+      "tag": "#audiovisual",
+      "usageCount": 548,
+      "growthPercent": 41,
+      "weight": 0.44
+    },
+    {
+      "tag": "#ceramicstudio",
+      "usageCount": 492,
+      "growthPercent": 36,
+      "weight": 0.41
+    },
+    {
+      "tag": "#slowfashion",
+      "usageCount": 471,
+      "growthPercent": 28,
+      "weight": 0.39
+    },
+    {
+      "tag": "#kilntested",
+      "usageCount": 412,
+      "growthPercent": 24,
+      "weight": 0.36
+    },
+    {
+      "tag": "#sounddesign",
+      "usageCount": 388,
+      "growthPercent": 18,
+      "weight": 0.34
+    },
+    {
+      "tag": "#fountainpen",
+      "usageCount": 362,
+      "growthPercent": 12,
+      "weight": 0.32
+    },
+    {
+      "tag": "#mediumformat",
+      "usageCount": 318,
+      "growthPercent": 9,
+      "weight": 0.29
+    },
+    {
+      "tag": "#singleorigin",
+      "usageCount": 284,
+      "growthPercent": 6,
+      "weight": 0.26
+    },
+    {
+      "tag": "#setdesign",
+      "usageCount": 268,
+      "growthPercent": -4,
+      "weight": 0.24
+    },
+    {
+      "tag": "#fmsynthesis",
+      "usageCount": 248,
+      "growthPercent": -8,
+      "weight": 0.22
+    },
+    {
+      "tag": "#liveset",
+      "usageCount": 224,
+      "growthPercent": -12,
+      "weight": 0.21
+    },
+    {
+      "tag": "#kodakk100",
+      "usageCount": 218,
+      "growthPercent": -16,
+      "weight": 0.2
+    },
+    {
+      "tag": "#naturaldye",
+      "usageCount": 192,
+      "growthPercent": -22,
+      "weight": 0.18
+    }
+  ],
+  "platformComparison": [
+    {
+      "platform": "instagram",
+      "label": "Instagram",
+      "currentAvgEngagement": 5.42,
+      "previousAvgEngagement": 5.18,
+      "deltaPercent": 4.63,
+      "series": [
+        {
+          "day": "Mon",
+          "value": 4.84
+        },
+        {
+          "day": "Tue",
+          "value": 5.12
+        },
+        {
+          "day": "Wed",
+          "value": 5.41
+        },
+        {
+          "day": "Thu",
+          "value": 6.04
+        },
+        {
+          "day": "Fri",
+          "value": 5.78
+        },
+        {
+          "day": "Sat",
+          "value": 5.62
+        },
+        {
+          "day": "Sun",
+          "value": 5.18
+        }
+      ]
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "currentAvgEngagement": 7.84,
+      "previousAvgEngagement": 6.92,
+      "deltaPercent": 13.29,
+      "series": [
+        {
+          "day": "Mon",
+          "value": 6.42
+        },
+        {
+          "day": "Tue",
+          "value": 7.12
+        },
+        {
+          "day": "Wed",
+          "value": 7.84
+        },
+        {
+          "day": "Thu",
+          "value": 8.42
+        },
+        {
+          "day": "Fri",
+          "value": 8.78
+        },
+        {
+          "day": "Sat",
+          "value": 8.21
+        },
+        {
+          "day": "Sun",
+          "value": 7.42
+        }
+      ]
+    }
+  ],
+  "heatmap": {
+    "weekdays": [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
+    ],
+    "cells": [
+      {
+        "day": 0,
+        "hour": 0,
+        "value": 1.8
+      },
+      {
+        "day": 0,
+        "hour": 1,
+        "value": 1.4
+      },
+      {
+        "day": 0,
+        "hour": 2,
+        "value": 1.1
+      },
+      {
+        "day": 0,
+        "hour": 3,
+        "value": 0.9
+      },
+      {
+        "day": 0,
+        "hour": 4,
+        "value": 0.8
+      },
+      {
+        "day": 0,
+        "hour": 5,
+        "value": 1.2
+      },
+      {
+        "day": 0,
+        "hour": 6,
+        "value": 2.4
+      },
+      {
+        "day": 0,
+        "hour": 7,
+        "value": 3.6
+      },
+      {
+        "day": 0,
+        "hour": 8,
+        "value": 4.2
+      },
+      {
+        "day": 0,
+        "hour": 9,
+        "value": 4.6
+      },
+      {
+        "day": 0,
+        "hour": 10,
+        "value": 5.1
+      },
+      {
+        "day": 0,
+        "hour": 11,
+        "value": 5.4
+      },
+      {
+        "day": 0,
+        "hour": 12,
+        "value": 5.8
+      },
+      {
+        "day": 0,
+        "hour": 13,
+        "value": 5.6
+      },
+      {
+        "day": 0,
+        "hour": 14,
+        "value": 5.2
+      },
+      {
+        "day": 0,
+        "hour": 15,
+        "value": 5.4
+      },
+      {
+        "day": 0,
+        "hour": 16,
+        "value": 6
+      },
+      {
+        "day": 0,
+        "hour": 17,
+        "value": 6.8
+      },
+      {
+        "day": 0,
+        "hour": 18,
+        "value": 7.6
+      },
+      {
+        "day": 0,
+        "hour": 19,
+        "value": 8.4
+      },
+      {
+        "day": 0,
+        "hour": 20,
+        "value": 8.8
+      },
+      {
+        "day": 0,
+        "hour": 21,
+        "value": 8.2
+      },
+      {
+        "day": 0,
+        "hour": 22,
+        "value": 6.4
+      },
+      {
+        "day": 0,
+        "hour": 23,
+        "value": 3.8
+      },
+      {
+        "day": 1,
+        "hour": 0,
+        "value": 1.6
+      },
+      {
+        "day": 1,
+        "hour": 1,
+        "value": 1.2
+      },
+      {
+        "day": 1,
+        "hour": 2,
+        "value": 0.9
+      },
+      {
+        "day": 1,
+        "hour": 3,
+        "value": 0.7
+      },
+      {
+        "day": 1,
+        "hour": 4,
+        "value": 0.6
+      },
+      {
+        "day": 1,
+        "hour": 5,
+        "value": 1
+      },
+      {
+        "day": 1,
+        "hour": 6,
+        "value": 2.2
+      },
+      {
+        "day": 1,
+        "hour": 7,
+        "value": 3.4
+      },
+      {
+        "day": 1,
+        "hour": 8,
+        "value": 4.4
+      },
+      {
+        "day": 1,
+        "hour": 9,
+        "value": 4.8
+      },
+      {
+        "day": 1,
+        "hour": 10,
+        "value": 5.2
+      },
+      {
+        "day": 1,
+        "hour": 11,
+        "value": 5.6
+      },
+      {
+        "day": 1,
+        "hour": 12,
+        "value": 6
+      },
+      {
+        "day": 1,
+        "hour": 13,
+        "value": 5.8
+      },
+      {
+        "day": 1,
+        "hour": 14,
+        "value": 5.4
+      },
+      {
+        "day": 1,
+        "hour": 15,
+        "value": 5.6
+      },
+      {
+        "day": 1,
+        "hour": 16,
+        "value": 6.2
+      },
+      {
+        "day": 1,
+        "hour": 17,
+        "value": 7
+      },
+      {
+        "day": 1,
+        "hour": 18,
+        "value": 7.8
+      },
+      {
+        "day": 1,
+        "hour": 19,
+        "value": 8.6
+      },
+      {
+        "day": 1,
+        "hour": 20,
+        "value": 9
+      },
+      {
+        "day": 1,
+        "hour": 21,
+        "value": 8.4
+      },
+      {
+        "day": 1,
+        "hour": 22,
+        "value": 6.6
+      },
+      {
+        "day": 1,
+        "hour": 23,
+        "value": 3.4
+      },
+      {
+        "day": 2,
+        "hour": 0,
+        "value": 1.5
+      },
+      {
+        "day": 2,
+        "hour": 1,
+        "value": 1.1
+      },
+      {
+        "day": 2,
+        "hour": 2,
+        "value": 0.8
+      },
+      {
+        "day": 2,
+        "hour": 3,
+        "value": 0.6
+      },
+      {
+        "day": 2,
+        "hour": 4,
+        "value": 0.5
+      },
+      {
+        "day": 2,
+        "hour": 5,
+        "value": 0.9
+      },
+      {
+        "day": 2,
+        "hour": 6,
+        "value": 2
+      },
+      {
+        "day": 2,
+        "hour": 7,
+        "value": 3.2
+      },
+      {
+        "day": 2,
+        "hour": 8,
+        "value": 4.6
+      },
+      {
+        "day": 2,
+        "hour": 9,
+        "value": 5
+      },
+      {
+        "day": 2,
+        "hour": 10,
+        "value": 5.4
+      },
+      {
+        "day": 2,
+        "hour": 11,
+        "value": 5.8
+      },
+      {
+        "day": 2,
+        "hour": 12,
+        "value": 6.2
+      },
+      {
+        "day": 2,
+        "hour": 13,
+        "value": 6
+      },
+      {
+        "day": 2,
+        "hour": 14,
+        "value": 5.6
+      },
+      {
+        "day": 2,
+        "hour": 15,
+        "value": 5.8
+      },
+      {
+        "day": 2,
+        "hour": 16,
+        "value": 6.4
+      },
+      {
+        "day": 2,
+        "hour": 17,
+        "value": 7.2
+      },
+      {
+        "day": 2,
+        "hour": 18,
+        "value": 8
+      },
+      {
+        "day": 2,
+        "hour": 19,
+        "value": 8.8
+      },
+      {
+        "day": 2,
+        "hour": 20,
+        "value": 9.2
+      },
+      {
+        "day": 2,
+        "hour": 21,
+        "value": 8.6
+      },
+      {
+        "day": 2,
+        "hour": 22,
+        "value": 6.8
+      },
+      {
+        "day": 2,
+        "hour": 23,
+        "value": 3
+      },
+      {
+        "day": 3,
+        "hour": 0,
+        "value": 1.4
+      },
+      {
+        "day": 3,
+        "hour": 1,
+        "value": 1
+      },
+      {
+        "day": 3,
+        "hour": 2,
+        "value": 0.7
+      },
+      {
+        "day": 3,
+        "hour": 3,
+        "value": 0.5
+      },
+      {
+        "day": 3,
+        "hour": 4,
+        "value": 0.4
+      },
+      {
+        "day": 3,
+        "hour": 5,
+        "value": 0.8
+      },
+      {
+        "day": 3,
+        "hour": 6,
+        "value": 1.8
+      },
+      {
+        "day": 3,
+        "hour": 7,
+        "value": 3
+      },
+      {
+        "day": 3,
+        "hour": 8,
+        "value": 4.8
+      },
+      {
+        "day": 3,
+        "hour": 9,
+        "value": 5.2
+      },
+      {
+        "day": 3,
+        "hour": 10,
+        "value": 5.6
+      },
+      {
+        "day": 3,
+        "hour": 11,
+        "value": 6
+      },
+      {
+        "day": 3,
+        "hour": 12,
+        "value": 6.4
+      },
+      {
+        "day": 3,
+        "hour": 13,
+        "value": 6.2
+      },
+      {
+        "day": 3,
+        "hour": 14,
+        "value": 5.8
+      },
+      {
+        "day": 3,
+        "hour": 15,
+        "value": 6
+      },
+      {
+        "day": 3,
+        "hour": 16,
+        "value": 6.6
+      },
+      {
+        "day": 3,
+        "hour": 17,
+        "value": 7.4
+      },
+      {
+        "day": 3,
+        "hour": 18,
+        "value": 8.4
+      },
+      {
+        "day": 3,
+        "hour": 19,
+        "value": 9.4
+      },
+      {
+        "day": 3,
+        "hour": 20,
+        "value": 9.8
+      },
+      {
+        "day": 3,
+        "hour": 21,
+        "value": 8.8
+      },
+      {
+        "day": 3,
+        "hour": 22,
+        "value": 7
+      },
+      {
+        "day": 3,
+        "hour": 23,
+        "value": 2.6
+      },
+      {
+        "day": 4,
+        "hour": 0,
+        "value": 1.2
+      },
+      {
+        "day": 4,
+        "hour": 1,
+        "value": 0.9
+      },
+      {
+        "day": 4,
+        "hour": 2,
+        "value": 0.6
+      },
+      {
+        "day": 4,
+        "hour": 3,
+        "value": 0.4
+      },
+      {
+        "day": 4,
+        "hour": 4,
+        "value": 0.3
+      },
+      {
+        "day": 4,
+        "hour": 5,
+        "value": 0.7
+      },
+      {
+        "day": 4,
+        "hour": 6,
+        "value": 1.6
+      },
+      {
+        "day": 4,
+        "hour": 7,
+        "value": 2.8
+      },
+      {
+        "day": 4,
+        "hour": 8,
+        "value": 4.4
+      },
+      {
+        "day": 4,
+        "hour": 9,
+        "value": 4.8
+      },
+      {
+        "day": 4,
+        "hour": 10,
+        "value": 5.2
+      },
+      {
+        "day": 4,
+        "hour": 11,
+        "value": 5.6
+      },
+      {
+        "day": 4,
+        "hour": 12,
+        "value": 6
+      },
+      {
+        "day": 4,
+        "hour": 13,
+        "value": 5.8
+      },
+      {
+        "day": 4,
+        "hour": 14,
+        "value": 5.4
+      },
+      {
+        "day": 4,
+        "hour": 15,
+        "value": 5.6
+      },
+      {
+        "day": 4,
+        "hour": 16,
+        "value": 6.2
+      },
+      {
+        "day": 4,
+        "hour": 17,
+        "value": 7
+      },
+      {
+        "day": 4,
+        "hour": 18,
+        "value": 7.8
+      },
+      {
+        "day": 4,
+        "hour": 19,
+        "value": 8.6
+      },
+      {
+        "day": 4,
+        "hour": 20,
+        "value": 9
+      },
+      {
+        "day": 4,
+        "hour": 21,
+        "value": 8.4
+      },
+      {
+        "day": 4,
+        "hour": 22,
+        "value": 6.6
+      },
+      {
+        "day": 4,
+        "hour": 23,
+        "value": 2.4
+      },
+      {
+        "day": 5,
+        "hour": 0,
+        "value": 2.8
+      },
+      {
+        "day": 5,
+        "hour": 1,
+        "value": 2.2
+      },
+      {
+        "day": 5,
+        "hour": 2,
+        "value": 1.6
+      },
+      {
+        "day": 5,
+        "hour": 3,
+        "value": 1
+      },
+      {
+        "day": 5,
+        "hour": 4,
+        "value": 0.7
+      },
+      {
+        "day": 5,
+        "hour": 5,
+        "value": 0.9
+      },
+      {
+        "day": 5,
+        "hour": 6,
+        "value": 1.4
+      },
+      {
+        "day": 5,
+        "hour": 7,
+        "value": 2.4
+      },
+      {
+        "day": 5,
+        "hour": 8,
+        "value": 3.6
+      },
+      {
+        "day": 5,
+        "hour": 9,
+        "value": 4.4
+      },
+      {
+        "day": 5,
+        "hour": 10,
+        "value": 5.6
+      },
+      {
+        "day": 5,
+        "hour": 11,
+        "value": 6.4
+      },
+      {
+        "day": 5,
+        "hour": 12,
+        "value": 7
+      },
+      {
+        "day": 5,
+        "hour": 13,
+        "value": 7.4
+      },
+      {
+        "day": 5,
+        "hour": 14,
+        "value": 7.2
+      },
+      {
+        "day": 5,
+        "hour": 15,
+        "value": 7.6
+      },
+      {
+        "day": 5,
+        "hour": 16,
+        "value": 8
+      },
+      {
+        "day": 5,
+        "hour": 17,
+        "value": 8.4
+      },
+      {
+        "day": 5,
+        "hour": 18,
+        "value": 8.8
+      },
+      {
+        "day": 5,
+        "hour": 19,
+        "value": 9.6
+      },
+      {
+        "day": 5,
+        "hour": 20,
+        "value": 9.8
+      },
+      {
+        "day": 5,
+        "hour": 21,
+        "value": 9.2
+      },
+      {
+        "day": 5,
+        "hour": 22,
+        "value": 7.4
+      },
+      {
+        "day": 5,
+        "hour": 23,
+        "value": 4.6
+      },
+      {
+        "day": 6,
+        "hour": 0,
+        "value": 3.2
+      },
+      {
+        "day": 6,
+        "hour": 1,
+        "value": 2.4
+      },
+      {
+        "day": 6,
+        "hour": 2,
+        "value": 1.8
+      },
+      {
+        "day": 6,
+        "hour": 3,
+        "value": 1.2
+      },
+      {
+        "day": 6,
+        "hour": 4,
+        "value": 0.8
+      },
+      {
+        "day": 6,
+        "hour": 5,
+        "value": 1
+      },
+      {
+        "day": 6,
+        "hour": 6,
+        "value": 1.6
+      },
+      {
+        "day": 6,
+        "hour": 7,
+        "value": 2.6
+      },
+      {
+        "day": 6,
+        "hour": 8,
+        "value": 3.8
+      },
+      {
+        "day": 6,
+        "hour": 9,
+        "value": 4.6
+      },
+      {
+        "day": 6,
+        "hour": 10,
+        "value": 5.8
+      },
+      {
+        "day": 6,
+        "hour": 11,
+        "value": 6.6
+      },
+      {
+        "day": 6,
+        "hour": 12,
+        "value": 7.2
+      },
+      {
+        "day": 6,
+        "hour": 13,
+        "value": 7.6
+      },
+      {
+        "day": 6,
+        "hour": 14,
+        "value": 7.4
+      },
+      {
+        "day": 6,
+        "hour": 15,
+        "value": 7.4
+      },
+      {
+        "day": 6,
+        "hour": 16,
+        "value": 7.6
+      },
+      {
+        "day": 6,
+        "hour": 17,
+        "value": 7.8
+      },
+      {
+        "day": 6,
+        "hour": 18,
+        "value": 8
+      },
+      {
+        "day": 6,
+        "hour": 19,
+        "value": 8.6
+      },
+      {
+        "day": 6,
+        "hour": 20,
+        "value": 8.4
+      },
+      {
+        "day": 6,
+        "hour": 21,
+        "value": 7.6
+      },
+      {
+        "day": 6,
+        "hour": 22,
+        "value": 5.8
+      },
+      {
+        "day": 6,
+        "hour": 23,
+        "value": 3.4
+      }
+    ]
+  }
+}

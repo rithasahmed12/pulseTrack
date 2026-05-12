@@ -1,0 +1,258 @@
+{
+  "currentUser": {
+    "displayName": "Alex Morgan",
+    "firstName": "Alex"
+  },
+  "timeRange": "7d",
+  "timeRangeOptions": [
+    {
+      "id": "24h",
+      "label": "24h",
+      "longLabel": "Last 24 hours"
+    },
+    {
+      "id": "7d",
+      "label": "7d",
+      "longLabel": "Last 7 days"
+    },
+    {
+      "id": "30d",
+      "label": "30d",
+      "longLabel": "Last 30 days"
+    }
+  ],
+  "stats": [
+    {
+      "id": "tracked-profiles",
+      "label": "Tracked profiles",
+      "value": 9,
+      "formattedValue": "9",
+      "icon": "users",
+      "tone": "violet",
+      "delta": {
+        "value": 2,
+        "direction": "up",
+        "label": "+2 vs prev 7d"
+      }
+    },
+    {
+      "id": "posts-scraped",
+      "label": "Posts scraped",
+      "value": 1284,
+      "formattedValue": "1,284",
+      "icon": "image",
+      "tone": "cyan",
+      "delta": {
+        "value": 184,
+        "direction": "up",
+        "label": "+184 vs prev 7d"
+      }
+    },
+    {
+      "id": "avg-engagement",
+      "label": "Avg engagement",
+      "value": 4.82,
+      "formattedValue": "4.82%",
+      "icon": "trending-up",
+      "tone": "amber",
+      "delta": {
+        "value": 0.31,
+        "direction": "up",
+        "label": "+0.31 vs prev 7d"
+      }
+    },
+    {
+      "id": "trending-tags",
+      "label": "Trending hashtags",
+      "value": 27,
+      "formattedValue": "27",
+      "icon": "hash",
+      "tone": "rose",
+      "delta": {
+        "value": 4,
+        "direction": "down",
+        "label": "−4 vs prev 7d"
+      }
+    }
+  ],
+  "topPosts": [
+    {
+      "id": "post_01",
+      "platform": "tiktok",
+      "profileUsername": "ortega.films",
+      "profileDisplayName": "Ortega Films",
+      "postType": "video",
+      "caption": "Forty seconds inside the abandoned drive-in we just bought.",
+      "likes": 412800,
+      "comments": 8420,
+      "shares": 6210,
+      "saves": 14200,
+      "views": 4180000,
+      "engagementRate": 9.86,
+      "postedAt": "2026-05-10T18:24:00Z",
+      "thumbnailHue": 188
+    },
+    {
+      "id": "post_02",
+      "platform": "tiktok",
+      "profileUsername": "vellum.notes",
+      "profileDisplayName": "Vellum Notes",
+      "postType": "video",
+      "caption": "The pen no one knows is actually $3.",
+      "likes": 218000,
+      "comments": 12400,
+      "shares": 3120,
+      "saves": 31200,
+      "views": 2680000,
+      "engagementRate": 8.94,
+      "postedAt": "2026-05-09T13:11:00Z",
+      "thumbnailHue": 268
+    },
+    {
+      "id": "post_03",
+      "platform": "instagram",
+      "profileUsername": "melodye.haus",
+      "profileDisplayName": "Melodye Haus",
+      "postType": "carousel",
+      "caption": "Live patch from last night — five slides.",
+      "likes": 89200,
+      "comments": 1840,
+      "shares": 0,
+      "saves": 6120,
+      "views": 0,
+      "engagementRate": 7.45,
+      "postedAt": "2026-05-11T20:42:00Z",
+      "thumbnailHue": 285
+    },
+    {
+      "id": "post_04",
+      "platform": "instagram",
+      "profileUsername": "north.kiln",
+      "profileDisplayName": "North Kiln Ceramics",
+      "postType": "photo",
+      "caption": "Drop drops Tuesday — slip-cast bud vases, six only.",
+      "likes": 22400,
+      "comments": 612,
+      "shares": 0,
+      "saves": 1820,
+      "views": 0,
+      "engagementRate": 6.81,
+      "postedAt": "2026-05-12T09:58:00Z",
+      "thumbnailHue": 202
+    },
+    {
+      "id": "post_05",
+      "platform": "instagram",
+      "profileUsername": "dust.archive",
+      "profileDisplayName": "Dust Archive",
+      "postType": "carousel",
+      "caption": "Submitted by a follower: 1972, San Antonio commercial photographer's contact sheet.",
+      "likes": 41200,
+      "comments": 920,
+      "shares": 0,
+      "saves": 4810,
+      "views": 0,
+      "engagementRate": 6.42,
+      "postedAt": "2026-05-10T11:30:00Z",
+      "thumbnailHue": 34
+    },
+    {
+      "id": "post_06",
+      "platform": "tiktok",
+      "profileUsername": "linen.season",
+      "profileDisplayName": "Linen Season",
+      "postType": "video",
+      "caption": "Three ways to wear the camp shirt this summer.",
+      "likes": 64800,
+      "comments": 2120,
+      "shares": 1820,
+      "saves": 5210,
+      "views": 1140000,
+      "engagementRate": 5.97,
+      "postedAt": "2026-05-09T16:08:00Z",
+      "thumbnailHue": 348
+    }
+  ],
+  "activity": [
+    {
+      "id": "act_01",
+      "type": "trending_hashtag",
+      "platform": null,
+      "profileUsername": null,
+      "message": "#linenseason rising fast — +312% in 6h",
+      "createdAt": "2026-05-12T14:46:00Z"
+    },
+    {
+      "id": "act_02",
+      "type": "follower_spike",
+      "platform": "tiktok",
+      "profileUsername": "ortega.films",
+      "message": "@ortega.films · +1,284 followers in 1h",
+      "createdAt": "2026-05-12T14:38:00Z"
+    },
+    {
+      "id": "act_03",
+      "type": "new_post",
+      "platform": "instagram",
+      "profileUsername": "melodye.haus",
+      "message": "New carousel from @melodye.haus",
+      "createdAt": "2026-05-12T14:21:00Z"
+    },
+    {
+      "id": "act_04",
+      "type": "scrape_complete",
+      "platform": "instagram",
+      "profileUsername": "cobalt.studio",
+      "message": "20 posts synced for @cobalt.studio",
+      "createdAt": "2026-05-12T14:08:00Z"
+    },
+    {
+      "id": "act_05",
+      "type": "scrape_failed",
+      "platform": "tiktok",
+      "profileUsername": "linen.season",
+      "message": "Scrape failed for @linen.season — rate limited, retrying in 1h",
+      "createdAt": "2026-05-12T13:54:00Z"
+    },
+    {
+      "id": "act_06",
+      "type": "follower_spike",
+      "platform": "instagram",
+      "profileUsername": "dust.archive",
+      "message": "@dust.archive · velocity +42% this morning",
+      "createdAt": "2026-05-12T13:12:00Z"
+    },
+    {
+      "id": "act_07",
+      "type": "new_post",
+      "platform": "tiktok",
+      "profileUsername": "vellum.notes",
+      "message": "New video from @vellum.notes",
+      "createdAt": "2026-05-12T12:48:00Z"
+    },
+    {
+      "id": "act_08",
+      "type": "trending_hashtag",
+      "platform": null,
+      "profileUsername": null,
+      "message": "#wheelthrown jumped from #14 to #6 overnight",
+      "createdAt": "2026-05-12T11:22:00Z"
+    },
+    {
+      "id": "act_09",
+      "type": "scrape_complete",
+      "platform": "instagram",
+      "profileUsername": "ridge.coffee",
+      "message": "12 posts synced for @ridge.coffee",
+      "createdAt": "2026-05-12T10:50:00Z"
+    },
+    {
+      "id": "act_10",
+      "type": "new_post",
+      "platform": "instagram",
+      "profileUsername": "north.kiln",
+      "message": "New photo from @north.kiln",
+      "createdAt": "2026-05-12T09:58:00Z"
+    }
+  ]
+}

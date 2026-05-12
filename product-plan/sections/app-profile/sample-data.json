@@ -1,0 +1,54 @@
+{
+  "user": {
+    "id": "user_alex_morgan",
+    "displayName": "Alex Morgan",
+    "email": "alex@meridian.studio",
+    "bio": "Trends analyst at Meridian Studio. I read momentum on socials so the design team doesn't have to.",
+    "avatarUrl": "https://api.dicebear.com/7.x/notionists/svg?seed=alex.morgan&backgroundColor=7c3aed",
+    "joinedAt": "2026-03-04T09:12:00Z"
+  },
+  "stats": [
+    {
+      "id": "member-since",
+      "label": "Member since",
+      "value": "Mar 2026",
+      "footnote": "2 months on PulseTrack",
+      "icon": "calendar",
+      "tone": "violet"
+    },
+    {
+      "id": "tracked-profiles",
+      "label": "Tracked profiles",
+      "value": "9",
+      "footnote": "across IG and TikTok",
+      "icon": "users",
+      "tone": "cyan"
+    },
+    {
+      "id": "posts-scraped",
+      "label": "Posts scraped",
+      "value": "1,284",
+      "footnote": "indexed in your workspace",
+      "icon": "image",
+      "tone": "amber"
+    }
+  ],
+  "connections": [
+    {
+      "platform": "instagram",
+      "label": "Instagram",
+      "isConnected": true,
+      "connectedHandle": "alex.morgan",
+      "lastSyncedAt": "2026-05-12T13:42:00Z",
+      "hint": "Pulls your own Story views, Reel plays, and saves so the dashboards include first-party numbers."
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "isConnected": false,
+      "connectedHandle": null,
+      "lastSyncedAt": null,
+      "hint": "Adds your own video views, duets, and live data into the Trending and Profile Detail surfaces."
+    }
+  ]
+}

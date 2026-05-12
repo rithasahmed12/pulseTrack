@@ -1,0 +1,92 @@
+@import 'tailwindcss';
+
+/* =============================================================================
+ * PulseTrack — Design Tokens
+ *
+ * Surfaces, accents, text colors, radii, and typography variables. Mirrors
+ * product-plan/design-system/tokens.css (the spec) — keep them in sync.
+ * ============================================================================= */
+
+:root {
+	/* Surfaces (dark-only) */
+	--bg-base: #0a0a0f;
+	--bg-surface: #0f0f18;
+	--bg-elevated: #16161f;
+	--bg-overlay: #13131e;
+
+	/* Borders */
+	--border-subtle: #1a1a24;
+	--border-default: #1e1e2e;
+	--border-strong: #252535;
+
+	/* Text */
+	--text-primary: #f1f5f9;
+	--text-secondary: #94a3b8;
+	--text-muted: #64748b;
+	--text-disabled: #475569;
+
+	/* Accents */
+	--accent-primary: #7c3aed;
+	--accent-secondary: #06b6d4;
+	--accent-rose: #f43f5e;
+	--accent-amber: #f59e0b;
+	--accent-emerald: #34d399;
+
+	/* Platform brand */
+	--brand-instagram-1: #e1306c;
+	--brand-instagram-2: #f77737;
+	--brand-tiktok: #010101;
+
+	/* Geometry */
+	--radius-sm: 6px;
+	--radius-md: 8px;
+	--radius-lg: 12px;
+	--radius-xl: 16px;
+	--radius-2xl: 20px;
+
+	/* Shadows / glow */
+	--glow-violet: 0 0 24px -8px rgba(124, 58, 237, 0.55);
+	--glow-cyan: 0 0 24px -8px rgba(6, 182, 212, 0.55);
+	--shadow-card:
+		0 1px 0 0 rgba(255, 255, 255, 0.02) inset, 0 8px 24px -16px rgba(0, 0, 0, 0.6);
+	--shadow-overlay: 0 18px 40px -12px rgba(0, 0, 0, 0.7);
+
+	/* Typography */
+	--font-heading:
+		'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--font-body:
+		'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+	--font-features: 'ss01', 'cv11';
+}
+
+@theme {
+	--font-sans:
+		'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html,
+body {
+	background: var(--bg-base);
+	color: var(--text-primary);
+	font-family: var(--font-body);
+	font-feature-settings: var(--font-features);
+}
+
+.tabular-nums {
+	font-variant-numeric: tabular-nums;
+}
+
+@keyframes pulse-soft {
+	0%,
+	100% {
+		opacity: 0.55;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.15);
+	}
+}

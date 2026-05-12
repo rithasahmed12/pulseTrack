@@ -1,0 +1,10 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+allowBuilds:
+  '@nestjs/core': true
+  '@tailwindcss/oxide': true
+  unrs-resolver: true
+  esbuild: true
+  '@scarf/scarf': false
+  sharp: set this to true or false
