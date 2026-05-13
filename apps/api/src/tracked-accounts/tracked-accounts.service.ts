@@ -5,10 +5,12 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
+import type { Pagination } from '@pulsetrack/shared-types';
 import { ScraperService } from '../scraper/scraper.service';
 import { SupabaseService } from '../supabase/supabase.service';
 import { AddTrackedDto } from './dto/add-tracked.dto';
 import { TrackedAccountDto } from './dto/tracked-account-response.dto';
+import { TrackedAccountsQueryDto } from './dto/tracked-accounts-query.dto';
 import { parseHandle } from './url-parser';
 
 const NEW_BADGE_MS = 24 * 60 * 60 * 1000;
@@ -40,17 +42,72 @@ export class TrackedAccountsService {
     private readonly scraper: ScraperService,
   ) {}
 
-  async list(userId: string, jwt: string): Promise<TrackedAccountDto[]> {
+  async list(
+    userId: string,
+    jwt: string,
+    query: TrackedAccountsQueryDto = {},
+  ): Promise<{ profiles: TrackedAccountDto[]; pagination: Pagination }> {
+    const page = Math.max(1, query.page ?? 1);
+    const pageSize = query.limit ?? 8;
+    const from = (page - 1) * pageSize;
+    const to = from + pageSize - 1;
+
     const client = this.supabase.forUser(jwt);
-    const { data, error } = await client
+    let q = client
       .from('tracked_accounts')
       .select(
         'id, platform, username, display_name, avatar_url, bio, followers_count, following_count, posts_count, engagement_rate, last_scraped_at, scrape_status, scrape_error, is_active, created_at',
+        { count: 'exact' },
       )
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false });
+      .eq('user_id', userId);
+
+    if (query.platform && query.platform !== 'all') {
+      q = q.eq('platform', query.platform);
+    }
+    if (query.q) {
+      const term = query.q.trim();
+      if (term) {
+        const escaped = term.replace(/[,()*]/g, ' ');
+        q = q.or(
+          `username.ilike.%${escaped}%,display_name.ilike.%${escaped}%,bio.ilike.%${escaped}%`,
+        );
+      }
+    }
+
+    const sort = query.sort ?? 'recently-added';
+    switch (sort) {
+      case 'most-followers':
+        q = q.order('followers_count', { ascending: false, nullsFirst: false });
+        break;
+      case 'highest-engagement':
+        q = q.order('engagement_rate', { ascending: false, nullsFirst: false });
+        break;
+      case 'last-scraped':
+        q = q.order('last_scraped_at', { ascending: false, nullsFirst: false });
+        break;
+      case 'recently-added':
+      default:
+        q = q.order('created_at', { ascending: false });
+        break;
+    }
+
+    q = q.range(from, to);
+
+    const { data, error, count } = await q;
     if (error) throw new BadRequestException(error.message);
-    return ((data as TrackedAccountRow[]) ?? []).map((r) => this.toDto(r));
+    const rows = (data as TrackedAccountRow[]) ?? [];
+    const total = count ?? 0;
+    const pageCount = total === 0 ? 0 : Math.ceil(total / pageSize);
+    return {
+      profiles: rows.map((r) => this.toDto(r)),
+      pagination: {
+        page,
+        pageSize,
+        total,
+        pageCount,
+        hasMore: page < pageCount,
+      },
+    };
   }
 
   async getById(id: string, jwt: string): Promise<TrackedAccountDto> {
@@ -104,6 +161,23 @@ export class TrackedAccountsService {
       .eq('id', id)
       .eq('user_id', userId);
     if (error) throw new BadRequestException(error.message);
+  }
+
+  /**
+   * Hard-delete a tracked account and cascade its dependents
+   * (`posts`, `follower_snapshots`, `scrape_jobs` have ON DELETE CASCADE;
+   * `activity_log.tracked_account_id` is ON DELETE SET NULL so history rows
+   * survive without an FK reference). Ownership is enforced by the
+   * `user_id = ?` clause in addition to admin-client privileges.
+   */
+  async purge(id: string, userId: string): Promise<void> {
+    const { error, count } = await this.supabase.admin
+      .from('tracked_accounts')
+      .delete({ count: 'exact' })
+      .eq('id', id)
+      .eq('user_id', userId);
+    if (error) throw new BadRequestException(error.message);
+    if (!count) throw new NotFoundException('Tracked account not found');
   }
 
   async triggerScrape(id: string, userId: string): Promise<{ jobId: string | null }> {

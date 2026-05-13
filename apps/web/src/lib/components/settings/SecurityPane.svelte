@@ -2,19 +2,14 @@
 	import Lock from '@lucide/svelte/icons/lock';
 	import Eye from '@lucide/svelte/icons/eye';
 	import EyeOff from '@lucide/svelte/icons/eye-off';
-	import ShieldCheck from '@lucide/svelte/icons/shield-check';
-	import Smartphone from '@lucide/svelte/icons/smartphone';
 	import type { PasswordFormValues, SecurityState } from '@pulsetrack/shared-types';
-	import Switch from './Switch.svelte';
 
 	interface Props {
 		security: SecurityState;
 		onPasswordSubmit?: (values: PasswordFormValues) => void;
-		onTwoFactorToggle?: (enabled: boolean) => void;
-		onSetUp2FAClick?: () => void;
 	}
 
-	let { security, onPasswordSubmit, onTwoFactorToggle, onSetUp2FAClick }: Props = $props();
+	let { security, onPasswordSubmit }: Props = $props();
 
 	let values = $state<PasswordFormValues>({ current: '', next: '', confirm: '' });
 	let show = $state(false);
@@ -189,45 +184,4 @@
 			</button>
 		</div>
 	</form>
-
-	<section
-		class="overflow-hidden rounded-2xl border border-[#1E1E2E] bg-[#0F0F18]/85 p-5 backdrop-blur-xl"
-	>
-		<header class="mb-4 flex items-start justify-between gap-3">
-			<div class="flex items-start gap-3">
-				<span
-					aria-hidden="true"
-					class="flex h-9 w-9 items-center justify-center rounded-lg border border-[#1E1E2E] bg-[#16161F] {security.twoFactorEnabled
-						? 'text-emerald-300'
-						: 'text-slate-500'}"
-				>
-					<ShieldCheck class="h-4 w-4" strokeWidth={1.8} />
-				</span>
-				<div>
-					<h2 class="text-[15px] font-semibold tracking-tight text-slate-100">
-						Two-factor authentication
-					</h2>
-					<p class="mt-0.5 text-[12.5px] text-slate-400">
-						Require an authenticator code in addition to your password at sign-in.
-					</p>
-				</div>
-			</div>
-			<Switch
-				checked={security.twoFactorEnabled}
-				onChange={(next) => onTwoFactorToggle?.(next)}
-				label="Two-factor authentication"
-			/>
-		</header>
-		<div class="border-t border-[#1A1A24] pt-4">
-			<button
-				type="button"
-				onclick={() => onSetUp2FAClick?.()}
-				disabled={!security.twoFactorEnabled}
-				class="inline-flex items-center gap-1.5 rounded-md border border-[#1E1E2E] bg-[#0F0F18] px-3 py-1.5 text-[12.5px] text-slate-300 transition-colors duration-150 hover:border-violet-500/30 hover:text-slate-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-[#1E1E2E] disabled:hover:text-slate-300"
-			>
-				<Smartphone class="h-3.5 w-3.5" strokeWidth={1.8} />
-				{security.twoFactorEnabled ? 'Set up authenticator' : 'Enable 2FA first'}
-			</button>
-		</div>
-	</section>
 </div>

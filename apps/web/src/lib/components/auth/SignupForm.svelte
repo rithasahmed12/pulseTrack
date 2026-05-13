@@ -7,8 +7,7 @@
 	import Eye from '@lucide/svelte/icons/eye';
 	import EyeOff from '@lucide/svelte/icons/eye-off';
 	import { signupSchema } from '$lib/auth/schemas';
-	import type { AuthFormCopy, LegalLinks, SocialProvider, SocialProviderId } from '$lib/auth/types';
-	import SocialAuthButtons from './SocialAuthButtons.svelte';
+	import type { AuthFormCopy, LegalLinks } from '$lib/auth/types';
 	import Field from './Field.svelte';
 	import Checkbox from './Checkbox.svelte';
 	import SubmitButton from './SubmitButton.svelte';
@@ -16,20 +15,11 @@
 	interface Props {
 		data: SuperValidated<Infer<typeof signupSchema>>;
 		copy: AuthFormCopy;
-		providers: SocialProvider[];
 		legal: LegalLinks;
 		onSwitchToLogin?: () => void;
-		onProviderClick?: (id: SocialProviderId) => void;
 	}
 
-	let {
-		data,
-		copy,
-		providers,
-		legal,
-		onSwitchToLogin,
-		onProviderClick
-	}: Props = $props();
+	let { data, copy, legal, onSwitchToLogin }: Props = $props();
 
 	// svelte-ignore state_referenced_locally
 	const sf = superForm(data, {
@@ -82,17 +72,6 @@
 			{$message}
 		</div>
 	{/if}
-
-	<SocialAuthButtons {providers} disabled={$submitting} {onProviderClick} />
-
-	<div class="relative py-1">
-		<div aria-hidden="true" class="absolute inset-0 flex items-center">
-			<div class="h-px w-full bg-[#1A1A24]"></div>
-		</div>
-		<div class="relative flex justify-center">
-			<span class="bg-[#0A0A0F] px-3 text-[12px] text-slate-500">or</span>
-		</div>
-	</div>
 
 	<Field id="name" label="Display name" error={$errors.name?.[0]}>
 		{#snippet icon()}

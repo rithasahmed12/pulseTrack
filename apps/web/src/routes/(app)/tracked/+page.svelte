@@ -1,24 +1,46 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
+	import { page } from '$app/state';
 	import type {
 		AddProfileModalState,
+		Pagination,
 		Platform,
 		PlatformFilter,
 		SortOption,
 		TrackedProfile
 	} from '@pulsetrack/shared-types';
 	import TrackedProfilesView from '$lib/components/tracked/TrackedProfilesView.svelte';
+	import { createBrowserSupabase } from '$lib/supabase/client';
 
 	let { data } = $props();
 
-	let filterControls = $state<{
-		platform: PlatformFilter;
-		sort: SortOption;
-		search: string;
-	}>({
-		platform: 'all',
-		sort: 'recently-added',
-		search: ''
+	const supabase = createBrowserSupabase();
+
+	// Subscribe to tracked_accounts UPDATE events for the current user so the
+	// ProfileCard spinner stops live the moment the server flips scrape_status
+	// back to 'idle' (or 'failed'). Without this the card stays in the scraping
+	// state until the user hard-refreshes the page.
+	$effect(() => {
+		const userId = data.user?.id;
+		if (!userId) return;
+		const channel = supabase
+			.channel(`tracked_accounts:${userId}`)
+			.on(
+				'postgres_changes',
+				{
+					event: 'UPDATE',
+					schema: 'public',
+					table: 'tracked_accounts',
+					filter: `user_id=eq.${userId}`
+				},
+				() => {
+					void invalidateAll();
+				}
+			)
+			.subscribe();
+		return () => {
+			void supabase.removeChannel(channel);
+		};
 	});
 
 	let modal = $state<AddProfileModalState>({
@@ -83,7 +105,8 @@
 			const payload = (await res.json()) as { type: string; status?: number; data?: string };
 			if (payload.type === 'failure') {
 				const arr = payload.data ? (JSON.parse(payload.data) as unknown[]) : [];
-				const errMsg = typeof arr[arr.length - 1] === 'string' ? (arr[arr.length - 1] as string) : 'Unable to add profile.';
+				const errMsg =
+					typeof arr[arr.length - 1] === 'string' ? (arr[arr.length - 1] as string) : 'Unable to add profile.';
 				addError = extractActionError(payload) ?? errMsg;
 				modal = { ...modal, isSubmitting: false };
 				return;
@@ -142,9 +165,67 @@
 		void postAction('remove', fd);
 	}
 
+	async function handlePurge(id: string, username: string, typed: string): Promise<boolean> {
+		const fd = new FormData();
+		fd.set('id', id);
+		fd.set('confirm', typed);
+		fd.set('expected', username);
+		try {
+			const res = await fetch('?/purge', { method: 'POST', body: fd });
+			if (!res.ok) return false;
+			await invalidateAll();
+			return true;
+		} catch {
+			return false;
+		}
+	}
+
 	function handleProfileClick(profile: TrackedProfile) {
 		void goto(`/profile/${profile.platform}/${profile.username}`);
 	}
+
+	function updateFilter(
+		patch: Partial<{ platform: PlatformFilter; sort: SortOption; search: string }>
+	) {
+		const params = new URLSearchParams(page.url.searchParams);
+		if (patch.platform !== undefined) {
+			if (patch.platform === 'all') params.delete('platform');
+			else params.set('platform', patch.platform);
+		}
+		if (patch.sort !== undefined) {
+			if (patch.sort === 'recently-added') params.delete('sort');
+			else params.set('sort', patch.sort);
+		}
+		if (patch.search !== undefined) {
+			const trimmed = patch.search.trim();
+			if (!trimmed) params.delete('q');
+			else params.set('q', trimmed);
+		}
+		// Any filter change resets to page 1.
+		params.delete('page');
+		void goto(`/tracked${params.toString() ? `?${params.toString()}` : ''}`, {
+			keepFocus: true,
+			noScroll: true
+		});
+	}
+
+	function gotoPage(target: number) {
+		const params = new URLSearchParams(page.url.searchParams);
+		if (target <= 1) params.delete('page');
+		else params.set('page', String(target));
+		void goto(`/tracked${params.toString() ? `?${params.toString()}` : ''}`, {
+			keepFocus: true,
+			noScroll: false
+		});
+	}
+
+	const filterControls = $derived({
+		platform: data.filters.platform,
+		sort: data.filters.sort,
+		search: data.filters.search
+	});
+	const profiles = $derived(data.profiles as TrackedProfile[]);
+	const pagination = $derived(data.pagination as Pagination);
 </script>
 
 <svelte:head>
@@ -152,7 +233,8 @@
 </svelte:head>
 
 <TrackedProfilesView
-	trackedProfiles={data.profiles}
+	trackedProfiles={profiles}
+	{pagination}
 	{filterControls}
 	addProfileModalState={modal}
 	addProfileError={addError}
@@ -161,12 +243,14 @@
 	onModalPlatformChange={setManualPlatform}
 	onAddProfileSubmit={submitAddProfile}
 	onAddProfileCancel={closeModal}
-	onFilterChange={(filter) => (filterControls = { ...filterControls, platform: filter })}
-	onSortChange={(sort) => (filterControls = { ...filterControls, sort })}
-	onSearchChange={(query) => (filterControls = { ...filterControls, search: query })}
+	onFilterChange={(filter) => updateFilter({ platform: filter })}
+	onSortChange={(sort) => updateFilter({ sort })}
+	onSearchChange={(query) => updateFilter({ search: query })}
+	onPageChange={gotoPage}
 	onProfileClick={handleProfileClick}
 	onScrapeNow={handleScrapeNow}
 	onTogglePaused={handleTogglePaused}
 	onRemoveProfile={handleRemove}
+	onPurgeProfile={handlePurge}
 	onRetryScrape={handleScrapeNow}
 />

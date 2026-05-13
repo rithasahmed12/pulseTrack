@@ -85,6 +85,8 @@ export class PaginationDto implements Pagination {
   @ApiProperty() page!: number;
   @ApiProperty() pageSize!: number;
   @ApiProperty() hasMore!: boolean;
+  @ApiProperty() total!: number;
+  @ApiProperty() pageCount!: number;
 }
 
 export class PostsListResponseDto {

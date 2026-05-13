@@ -6,6 +6,12 @@ export interface AppProfileSnapshot {
 	bio: string | null;
 }
 
+interface ProfileRow {
+	display_name: string | null;
+	avatar_url: string | null;
+	bio: string | null;
+}
+
 export const load: LayoutServerLoad = async ({ locals }) => {
 	const { session, user } = await locals.safeGetSession();
 	if (!session || !user) {
@@ -16,10 +22,14 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 		.from('profiles')
 		.select('display_name, avatar_url, bio')
 		.eq('id', user.id)
-		.maybeSingle<{ display_name: string | null; avatar_url: string | null; bio: string | null }>();
+		.maybeSingle<ProfileRow>();
 
 	const profile: AppProfileSnapshot | null = data
-		? { displayName: data.display_name, avatarUrl: data.avatar_url, bio: data.bio }
+		? {
+				displayName: data.display_name,
+				avatarUrl: data.avatar_url,
+				bio: data.bio
+			}
 		: null;
 
 	return { session, user, profile };

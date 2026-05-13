@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
-	import { onMount } from 'svelte';
 	import type {
-		AccentColorId,
-		AccentOption,
 		PasswordFormValues,
 		SettingsTab,
 		SettingsTabId
@@ -17,7 +14,7 @@
 		{
 			id: 'security',
 			label: 'Security',
-			description: 'Password and 2FA.',
+			description: 'Password.',
 			icon: 'lock'
 		},
 		{
@@ -27,33 +24,16 @@
 			icon: 'bell'
 		},
 		{
-			id: 'appearance',
-			label: 'Appearance',
-			description: 'Accent and sidebar defaults.',
-			icon: 'palette'
-		},
-		{
 			id: 'data',
 			label: 'Data & Privacy',
 			description: 'Export, cache, account deletion.',
 			icon: 'shield'
 		}
 	];
-	const ACCENT_OPTIONS: AccentOption[] = [
-		{ id: 'violet', label: 'Violet', hex: '#7C3AED' },
-		{ id: 'cyan', label: 'Cyan', hex: '#06B6D4' },
-		{ id: 'rose', label: 'Rose', hex: '#F43F5E' },
-		{ id: 'amber', label: 'Amber', hex: '#F59E0B' }
-	];
 
 	function tabFromHash(hash: string): SettingsTabId {
 		const candidate = hash.replace(/^#/, '');
-		if (
-			candidate === 'security' ||
-			candidate === 'notifications' ||
-			candidate === 'appearance' ||
-			candidate === 'data'
-		) {
+		if (candidate === 'security' || candidate === 'notifications' || candidate === 'data') {
 			return candidate;
 		}
 		return 'security';
@@ -61,21 +41,11 @@
 
 	let activeTab = $state<SettingsTabId>(tabFromHash(page.url.hash));
 	let saveError = $state<string | null>(null);
+	let saveSuccess = $state<string | null>(null);
 
 	$effect(() => {
 		activeTab = tabFromHash(page.url.hash);
 	});
-
-	onMount(() => {
-		applyAccent(data.settings.appearance.accentColor);
-	});
-
-	function applyAccent(accent: AccentColorId) {
-		const hex = ACCENT_OPTIONS.find((o) => o.id === accent)?.hex;
-		if (hex && typeof document !== 'undefined') {
-			document.documentElement.style.setProperty('--accent-primary', hex);
-		}
-	}
 
 	function setTab(id: SettingsTabId) {
 		activeTab = id;
@@ -107,29 +77,6 @@
 		void postAction('notification', fd);
 	}
 
-	function handleAccentChange(accent: AccentColorId) {
-		applyAccent(accent);
-		const fd = new FormData();
-		fd.set('accentColor', accent);
-		void postAction('appearance', fd);
-	}
-
-	function handleSidebarToggle(collapsed: boolean) {
-		const fd = new FormData();
-		fd.set('sidebarStartsCollapsed', String(collapsed));
-		void postAction('appearance', fd);
-	}
-
-	function handleTwoFactorToggle(enabled: boolean) {
-		const fd = new FormData();
-		fd.set('enabled', String(enabled));
-		void postAction('twoFactor', fd);
-	}
-
-	function handleSetUp2FA() {
-		saveError = 'Authenticator setup ships in a follow-up — the toggle is live and the flag is persisted.';
-	}
-
 	function handlePasswordSubmit(values: PasswordFormValues) {
 		const fd = new FormData();
 		fd.set('current', values.current);
@@ -137,8 +84,41 @@
 		void postAction('password', fd);
 	}
 
-	function handleClearCache() {
-		saveError = 'No cache layer is configured in v0.1 — historical data is the source of truth.';
+	async function handleClearCache() {
+		saveError = null;
+		saveSuccess = null;
+		try {
+			if (typeof window !== 'undefined') {
+				let removed = 0;
+				try {
+					removed += window.localStorage.length;
+					window.localStorage.clear();
+				} catch {
+					// Storage access denied (private mode etc.) — fall through.
+				}
+				try {
+					removed += window.sessionStorage.length;
+					window.sessionStorage.clear();
+				} catch {
+					// Same as above.
+				}
+				if ('caches' in window) {
+					try {
+						const keys = await window.caches.keys();
+						await Promise.all(keys.map((k) => window.caches.delete(k)));
+					} catch {
+						// CacheStorage not available — skip.
+					}
+				}
+				await invalidateAll();
+				saveSuccess =
+					removed > 0
+						? `Cleared in-browser cache (${removed} item${removed === 1 ? '' : 's'}) and reloaded server data.`
+						: 'Cleared in-browser cache and reloaded server data.';
+			}
+		} catch (err) {
+			saveError = err instanceof Error ? err.message : 'Failed to clear cache.';
+		}
 	}
 
 	function handleExportCsv() {
@@ -173,21 +153,23 @@
 		{saveError}
 	</p>
 {/if}
+{#if saveSuccess}
+	<p
+		role="status"
+		class="mb-4 rounded-md border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-[12.5px] text-emerald-200"
+	>
+		{saveSuccess}
+	</p>
+{/if}
 
 <SettingsView
 	tabs={TABS}
 	{activeTab}
 	security={data.settings.security}
 	notificationPreferences={data.settings.notifications}
-	accentOptions={ACCENT_OPTIONS}
-	appearance={data.settings.appearance}
 	onTabChange={setTab}
 	onPasswordSubmit={handlePasswordSubmit}
-	onTwoFactorToggle={handleTwoFactorToggle}
-	onSetUp2FAClick={handleSetUp2FA}
 	onNotificationToggle={handleNotificationToggle}
-	onAccentChange={handleAccentChange}
-	onSidebarDefaultToggle={handleSidebarToggle}
 	onClearCache={handleClearCache}
 	onExportCsv={handleExportCsv}
 	onDeleteAccount={handleDeleteAccount}

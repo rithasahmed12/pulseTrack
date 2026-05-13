@@ -3,6 +3,8 @@
 	import TrendingUp from '@lucide/svelte/icons/trending-up';
 	import Hash from '@lucide/svelte/icons/hash';
 	import Mail from '@lucide/svelte/icons/mail';
+	import RefreshCw from '@lucide/svelte/icons/refresh-cw';
+	import AlertTriangle from '@lucide/svelte/icons/alert-triangle';
 	import type { Component } from 'svelte';
 	import type { NotificationPreference } from '@pulsetrack/shared-types';
 	import Switch from './Switch.svelte';
@@ -18,7 +20,9 @@
 		sparkles: Sparkles,
 		'trending-up': TrendingUp,
 		hash: Hash,
-		mail: Mail
+		mail: Mail,
+		'refresh-cw': RefreshCw,
+		'alert-triangle': AlertTriangle
 	};
 	const TONE_MAP: Record<string, string> = {
 		new_post: 'text-cyan-300',

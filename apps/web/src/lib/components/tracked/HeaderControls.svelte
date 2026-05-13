@@ -33,6 +33,31 @@
 		onAddProfileClick
 	}: Props = $props();
 
+	// Local mirror of the search field so typing doesn't trigger a navigation
+	// on every keystroke. We debounce the emit by 300ms.
+	// svelte-ignore state_referenced_locally
+	let searchDraft = $state(controls.search);
+	let searchTimer: ReturnType<typeof setTimeout> | undefined;
+
+	$effect(() => {
+		// Sync external (URL) → local when controls.search changes from outside (e.g. clear filters).
+		if (controls.search !== searchDraft) {
+			searchDraft = controls.search;
+		}
+	});
+
+	function emitSearch(value: string) {
+		searchDraft = value;
+		if (searchTimer) clearTimeout(searchTimer);
+		searchTimer = setTimeout(() => onSearchChange?.(value), 300);
+	}
+
+	function clearSearch() {
+		if (searchTimer) clearTimeout(searchTimer);
+		searchDraft = '';
+		onSearchChange?.('');
+	}
+
 	const SORT_LABELS: Record<SortOption, string> = {
 		'recently-added': 'Recently added',
 		'most-followers': 'Most followers',
@@ -109,15 +134,15 @@
 				/>
 				<input
 					type="search"
-					value={controls.search}
+					value={searchDraft}
 					placeholder="Search by name or @username"
-					oninput={(e) => onSearchChange?.((e.currentTarget as HTMLInputElement).value)}
+					oninput={(e) => emitSearch((e.currentTarget as HTMLInputElement).value)}
 					class="h-8 w-full rounded-lg border border-[#1E1E2E] bg-[#0F0F18] pl-8 pr-7 text-[13px] text-slate-200 placeholder:text-slate-500 outline-none transition-all duration-150 focus:border-violet-500/50 focus:bg-[#13131E] focus:shadow-[0_0_0_3px_rgba(124,58,237,0.12)]"
 				/>
-				{#if controls.search}
+				{#if searchDraft}
 					<button
 						type="button"
-						onclick={() => onSearchChange?.('')}
+						onclick={clearSearch}
 						aria-label="Clear search"
 						class="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-1 text-slate-500 hover:bg-white/[0.04] hover:text-slate-300"
 					>

@@ -1,6 +1,6 @@
 import { Controller, Get, Param, ParseUUIDPipe, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import type { Post, TopPost } from '@pulsetrack/shared-types';
+import type { Pagination, Post, TopPost } from '@pulsetrack/shared-types';
 import { CurrentUser, type AuthenticatedUser } from '../common/decorators/current-user.decorator';
 import { PostsListQueryDto, PostsListResponseDto, TopPostsResponseDto } from './dto/posts-list-query.dto';
 import { PostsService } from './posts.service';
@@ -17,7 +17,7 @@ export class PostsController {
   list(
     @CurrentUser() user: AuthenticatedUser,
     @Query() query: PostsListQueryDto,
-  ): Promise<{ posts: Post[]; pagination: { page: number; pageSize: number; hasMore: boolean } }> {
+  ): Promise<{ posts: Post[]; pagination: Pagination }> {
     return this.posts.list(user.jwt, query);
   }
 

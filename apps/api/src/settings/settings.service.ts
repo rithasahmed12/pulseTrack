@@ -4,30 +4,22 @@ import {
   InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
-import type {
-  AccentColorId,
-  AppearanceState,
-  NotificationPreference,
-  SecurityState,
-} from '@pulsetrack/shared-types';
+import type { NotificationPreference, SecurityState } from '@pulsetrack/shared-types';
 import { SupabaseService } from '../supabase/supabase.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import { UpdateAppearanceDto } from './dto/update-appearance.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
-import { UpdateTwoFactorDto } from './dto/update-two-factor.dto';
 
 interface NotificationsJson {
   new_post?: boolean;
   follower_spike?: boolean;
   trending_hashtag?: boolean;
   weekly_report?: boolean;
+  scrape_complete?: boolean;
+  scrape_failed?: boolean;
 }
 
 interface ProfileSettingsRow {
-  accent_color: AccentColorId | null;
-  sidebar_starts_collapsed: boolean | null;
   notifications: NotificationsJson | null;
-  two_factor_enabled: boolean | null;
   last_password_change_at: string | null;
 }
 
@@ -51,6 +43,18 @@ const NOTIFICATION_DESCRIPTORS: Array<Pick<NotificationPreference, 'id' | 'label
     icon: 'hash',
   },
   {
+    id: 'scrape_complete',
+    label: 'Scrape finished',
+    description: 'A background scrape successfully refreshed a tracked profile.',
+    icon: 'refresh-cw',
+  },
+  {
+    id: 'scrape_failed',
+    label: 'Scrape failed',
+    description: 'A background scrape errored out — usually a transient Apify hiccup.',
+    icon: 'alert-triangle',
+  },
+  {
     id: 'weekly_report',
     label: 'Weekly report email',
     description: 'A summary of the past 7 days, delivered to your inbox each Monday.',
@@ -61,7 +65,6 @@ const NOTIFICATION_DESCRIPTORS: Array<Pick<NotificationPreference, 'id' | 'label
 export interface SettingsResponse {
   security: SecurityState;
   notifications: NotificationPreference[];
-  appearance: AppearanceState;
 }
 
 @Injectable()
@@ -72,14 +75,9 @@ export class SettingsService {
     const row = await this.loadRow(userId, jwt);
     return {
       security: {
-        twoFactorEnabled: row.two_factor_enabled ?? false,
         lastPasswordChangeAt: row.last_password_change_at ?? '',
       },
       notifications: this.buildPreferences(row.notifications),
-      appearance: {
-        accentColor: row.accent_color ?? 'violet',
-        sidebarStartsCollapsed: row.sidebar_starts_collapsed ?? false,
-      },
     };
   }
 
@@ -95,47 +93,6 @@ export class SettingsService {
     const { error } = await client.from('profiles').update({ notifications: next }).eq('id', userId);
     if (error) throw new BadRequestException(error.message);
     return this.buildPreferences(next);
-  }
-
-  async updateAppearance(
-    userId: string,
-    jwt: string,
-    dto: UpdateAppearanceDto,
-  ): Promise<AppearanceState> {
-    const patch: Record<string, AccentColorId | boolean> = {};
-    if (dto.accentColor) patch.accent_color = dto.accentColor;
-    if (typeof dto.sidebarStartsCollapsed === 'boolean')
-      patch.sidebar_starts_collapsed = dto.sidebarStartsCollapsed;
-    if (Object.keys(patch).length === 0) {
-      const fresh = await this.get(userId, jwt);
-      return fresh.appearance;
-    }
-    const client = this.supabase.forUser(jwt);
-    const { error } = await client.from('profiles').update(patch).eq('id', userId);
-    if (error) throw new BadRequestException(error.message);
-    const row = await this.loadRow(userId, jwt);
-    return {
-      accentColor: row.accent_color ?? 'violet',
-      sidebarStartsCollapsed: row.sidebar_starts_collapsed ?? false,
-    };
-  }
-
-  async toggleTwoFactor(
-    userId: string,
-    jwt: string,
-    dto: UpdateTwoFactorDto,
-  ): Promise<SecurityState> {
-    const client = this.supabase.forUser(jwt);
-    const { error } = await client
-      .from('profiles')
-      .update({ two_factor_enabled: dto.enabled })
-      .eq('id', userId);
-    if (error) throw new BadRequestException(error.message);
-    const row = await this.loadRow(userId, jwt);
-    return {
-      twoFactorEnabled: row.two_factor_enabled ?? false,
-      lastPasswordChangeAt: row.last_password_change_at ?? '',
-    };
   }
 
   async changePassword(userId: string, dto: ChangePasswordDto): Promise<{ ok: true }> {
@@ -201,9 +158,7 @@ export class SettingsService {
     const client = this.supabase.forUser(jwt);
     const { data, error } = await client
       .from('profiles')
-      .select(
-        'accent_color, sidebar_starts_collapsed, notifications, two_factor_enabled, last_password_change_at',
-      )
+      .select('notifications, last_password_change_at')
       .eq('id', userId)
       .maybeSingle<ProfileSettingsRow>();
     if (error || !data) throw new BadRequestException(error?.message ?? 'Profile row missing');
@@ -212,13 +167,27 @@ export class SettingsService {
 
   private buildPreferences(notifications: NotificationsJson | null): NotificationPreference[] {
     const json = notifications ?? {};
-    return NOTIFICATION_DESCRIPTORS.map((d) => ({
-      id: d.id,
-      label: d.label,
-      description: d.description,
-      icon: d.icon,
-      enabled: Boolean(json[d.id as keyof NotificationsJson] ?? false),
-    }));
+    // Defaults: weekly email opt-in only; all in-app prefs default to ON so
+    // existing users without explicit settings still get notifications.
+    // A pref is OFF only when explicitly stored as false.
+    const defaultOn: Record<string, boolean> = {
+      new_post: true,
+      follower_spike: true,
+      trending_hashtag: true,
+      scrape_complete: true,
+      scrape_failed: true,
+      weekly_report: false,
+    };
+    return NOTIFICATION_DESCRIPTORS.map((d) => {
+      const stored = json[d.id as keyof NotificationsJson];
+      return {
+        id: d.id,
+        label: d.label,
+        description: d.description,
+        icon: d.icon,
+        enabled: stored ?? defaultOn[d.id] ?? false,
+      };
+    });
   }
 }
 

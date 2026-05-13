@@ -18,7 +18,7 @@
 		style="background-image: radial-gradient(circle at 1px 1px, rgba(241,245,249,0.045) 1px, transparent 0); background-size: 24px 24px; mask-image: radial-gradient(circle at 100% 0%, black 0%, black 30%, transparent 70%); -webkit-mask-image: radial-gradient(circle at 100% 0%, black 0%, black 30%, transparent 70%);"
 	></div>
 
-	<div class="relative flex h-full flex-col justify-between p-8 sm:p-10 lg:p-12">
+	<div class="relative flex h-full flex-col justify-center gap-6 p-6 sm:p-10 lg:justify-between lg:p-12">
 		<div class="flex items-center gap-3">
 			<span
 				class="relative flex h-8 w-8 items-center justify-center rounded-lg bg-violet-500/15 ring-1 ring-inset ring-violet-500/30"
@@ -32,7 +32,7 @@
 			</div>
 		</div>
 
-		<figure class="my-10 max-w-[460px]">
+		<figure class="my-10 hidden max-w-[460px] lg:block">
 			<div class="flex gap-5">
 				<span
 					aria-hidden="true"
@@ -50,7 +50,7 @@
 			</figcaption>
 		</figure>
 
-		<div class="space-y-3">
+		<div class="hidden space-y-3 lg:block">
 			<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-slate-500">
 				{#each stats as stat, i (stat.label)}
 					<div class="flex items-center gap-2">

@@ -2,11 +2,12 @@
 	import { onDestroy, onMount, tick } from 'svelte';
 	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
-	import Bell from '@lucide/svelte/icons/bell';
 	import Menu from '@lucide/svelte/icons/menu';
 	import Search from '@lucide/svelte/icons/search';
 	import X from '@lucide/svelte/icons/x';
+	import type { NotificationItem } from '@pulsetrack/shared-types';
 	import MainNav from './MainNav.svelte';
+	import NotificationsDropdown from './NotificationsDropdown.svelte';
 	import UserMenu from './UserMenu.svelte';
 	import type { NavItem, UserMenuUser } from './types';
 
@@ -16,17 +17,20 @@
 		user?: UserMenuUser;
 		pageTitle?: string;
 		pageEyebrow?: string;
-		notificationCount?: number;
+		notifications?: NotificationItem[];
+		unreadNotificationCount?: number;
 		onNavigate?: (href: string) => void;
 		onSearch?: (query: string) => void;
 		onLogout?: () => void;
+		onNotificationClick?: (item: NotificationItem) => void;
+		onMarkAllNotificationsRead?: () => void;
 	}
 
 	const DEFAULT_NAV: NavItem[] = [
 		{ label: 'Dashboard', href: '/dashboard', isActive: true },
+		{ label: 'Tracked', href: '/tracked' },
 		{ label: 'Posts', href: '/posts' },
 		{ label: 'Trending', href: '/trending' },
-		{ label: 'Tracked', href: '/tracked' },
 		{ label: 'App Profile', href: '/app-profile' },
 		{ label: 'Settings', href: '/settings' }
 	];
@@ -39,10 +43,13 @@
 		user = DEFAULT_USER,
 		pageTitle,
 		pageEyebrow = 'Workspace',
-		notificationCount = 0,
+		notifications = [],
+		unreadNotificationCount = 0,
 		onNavigate,
 		onSearch,
-		onLogout
+		onLogout,
+		onNotificationClick,
+		onMarkAllNotificationsRead
 	}: Props = $props();
 
 	let collapsed = $state(false);
@@ -145,7 +152,7 @@
 	<div class="relative flex min-h-screen">
 		<aside
 			aria-label="Sidebar"
-			class="hidden shrink-0 border-r border-[#1E1E2E] bg-[#0B0B12]/85 backdrop-blur-xl transition-[width] duration-300 ease-out lg:flex lg:flex-col {collapsed
+			class="hidden shrink-0 overflow-x-hidden border-r border-[#1E1E2E] bg-[#0B0B12]/85 backdrop-blur-xl transition-[width] duration-300 ease-out lg:flex lg:flex-col {collapsed
 				? 'lg:w-[68px]'
 				: 'lg:w-[240px]'}"
 		>
@@ -271,25 +278,12 @@
 						<Search class="h-4 w-4" />
 					</button>
 
-					<button
-						type="button"
-						aria-label={`Notifications${notificationCount ? ` (${notificationCount} unread)` : ''}`}
-						class="group relative flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-100"
-					>
-						<Bell class="h-[18px] w-[18px]" strokeWidth={1.75} />
-						{#if notificationCount > 0}
-							<span
-								class="absolute right-1.5 top-1.5 inline-flex h-2 w-2 rounded-full bg-rose-400"
-								style="animation: pulse-soft 2.4s ease-in-out infinite;"
-								aria-hidden="true"
-							></span>
-							<span
-								class="font-mono absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500/90 px-1 text-[9px] font-semibold text-white shadow-[0_0_10px_rgba(244,63,94,0.6)]"
-							>
-								{notificationCount > 9 ? '9+' : notificationCount}
-							</span>
-						{/if}
-					</button>
+					<NotificationsDropdown
+						items={notifications}
+						unreadCount={unreadNotificationCount}
+						onItemClick={onNotificationClick}
+						onMarkAllRead={onMarkAllNotificationsRead}
+					/>
 
 					<div class="mx-1.5 hidden h-6 w-px bg-[#1E1E2E] sm:block"></div>
 

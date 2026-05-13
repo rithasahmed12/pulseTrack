@@ -27,7 +27,6 @@
 	let pagination = $state<Pagination>(data.pagination);
 	// svelte-ignore state_referenced_locally
 	let openPost = $state<Post | null>(data.openPost);
-	let loadingMore = $state(false);
 
 	$effect(() => {
 		posts = data.posts;
@@ -60,10 +59,23 @@
 			if (patch.minEng === 0) params.delete('minEng');
 			else params.set('minEng', String(patch.minEng));
 		}
+		// Any filter change resets to page 1.
+		params.delete('page');
 		params.delete('postId');
 		void goto(`/posts${params.toString() ? `?${params.toString()}` : ''}`, {
 			keepFocus: true,
 			noScroll: true
+		});
+	}
+
+	function gotoPage(target: number) {
+		const params = new URLSearchParams(page.url.searchParams);
+		if (target <= 1) params.delete('page');
+		else params.set('page', String(target));
+		params.delete('postId');
+		void goto(`/posts${params.toString() ? `?${params.toString()}` : ''}`, {
+			keepFocus: true,
+			noScroll: false
 		});
 	}
 
@@ -74,38 +86,12 @@
 	function clearSearch() {
 		const params = new URLSearchParams(page.url.searchParams);
 		params.delete('q');
+		params.delete('page');
 		params.delete('postId');
 		void goto(`/posts${params.toString() ? `?${params.toString()}` : ''}`, {
 			keepFocus: true,
 			noScroll: true
 		});
-	}
-
-	function loadMoreUrl(nextPage: number): string {
-		const params = new URLSearchParams();
-		if (data.filters.postType !== 'all') params.set('postType', data.filters.postType);
-		if (data.filters.platform !== 'both') params.set('platform', data.filters.platform);
-		if (data.filters.dateRange !== '30d') params.set('dateRange', data.filters.dateRange);
-		if (data.filters.minEngagement > 0)
-			params.set('minEng', String(data.filters.minEngagement));
-		if (data.filters.q) params.set('q', data.filters.q);
-		params.set('page', String(nextPage));
-		return `/posts/load-more?${params.toString()}`;
-	}
-
-	async function loadMore() {
-		if (!pagination.hasMore || loadingMore) return;
-		loadingMore = true;
-		try {
-			const next = pagination.page + 1;
-			const res = await fetch(loadMoreUrl(next));
-			if (!res.ok) return;
-			const body = (await res.json()) as { posts: Post[]; pagination: Pagination };
-			posts = [...posts, ...body.posts];
-			pagination = body.pagination;
-		} finally {
-			loadingMore = false;
-		}
 	}
 
 	async function openPostFromCard(post: Post) {
@@ -165,7 +151,7 @@
 
 <PostsView
 	{posts}
-	totalCount={posts.length}
+	totalCount={pagination.total}
 	filterControls={{
 		postType: data.filters.postType,
 		platform: data.filters.platform,
@@ -174,14 +160,13 @@
 	}}
 	dateRangeOptions={DATE_RANGE_OPTIONS}
 	{pagination}
-	{loadingMore}
 	onPostTypeChange={(t) => updateFilter({ postType: t })}
 	onPlatformChange={(p) => updateFilter({ platform: p })}
 	onDateRangeChange={(r) => updateFilter({ dateRange: r })}
 	onMinEngagementChange={(v) => updateFilter({ minEng: v })}
 	onResetFilters={resetFilters}
 	onPostClick={openPostFromCard}
-	onLoadMore={loadMore}
+	onPageChange={gotoPage}
 />
 
 <PostDetailModal post={openPost} onClose={closeModal} onHashtagClick={openHashtag} />

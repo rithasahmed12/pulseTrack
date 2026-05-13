@@ -8,11 +8,16 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, type AuthenticatedUser } from '../common/decorators/current-user.decorator';
 import { AddTrackedDto } from './dto/add-tracked.dto';
 import { TrackedAccountDto } from './dto/tracked-account-response.dto';
+import {
+  TrackedAccountsListResponseDto,
+  TrackedAccountsQueryDto,
+} from './dto/tracked-accounts-query.dto';
 import { TrackedAccountsService } from './tracked-accounts.service';
 
 @ApiTags('tracked-accounts')
@@ -22,10 +27,15 @@ export class TrackedAccountsController {
   constructor(private readonly tracked: TrackedAccountsService) {}
 
   @Get()
-  @ApiOperation({ summary: 'List all tracked accounts owned by the current analyst.' })
-  @ApiOkResponse({ type: TrackedAccountDto, isArray: true })
-  list(@CurrentUser() user: AuthenticatedUser): Promise<TrackedAccountDto[]> {
-    return this.tracked.list(user.id, user.jwt);
+  @ApiOperation({
+    summary: 'List tracked accounts owned by the current analyst (paginated, filterable).',
+  })
+  @ApiOkResponse({ type: TrackedAccountsListResponseDto })
+  list(
+    @CurrentUser() user: AuthenticatedUser,
+    @Query() query: TrackedAccountsQueryDto,
+  ): Promise<TrackedAccountsListResponseDto> {
+    return this.tracked.list(user.id, user.jwt, query);
   }
 
   @Post()
@@ -56,6 +66,19 @@ export class TrackedAccountsController {
     @Param('id', new ParseUUIDPipe()) id: string,
   ): Promise<void> {
     await this.tracked.remove(id, user.id);
+  }
+
+  @Delete(':id/permanent')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary:
+      'Hard-delete a tracked account. Cascades to posts, follower snapshots, and scrape jobs.',
+  })
+  async purge(
+    @CurrentUser() user: AuthenticatedUser,
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ): Promise<void> {
+    await this.tracked.purge(id, user.id);
   }
 
   @Post(':id/scrape')

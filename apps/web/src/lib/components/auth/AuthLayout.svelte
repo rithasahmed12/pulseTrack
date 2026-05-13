@@ -19,7 +19,7 @@
 >
 	<div class="grid min-h-screen grid-cols-1 lg:h-screen lg:grid-cols-2">
 		<div
-			class="relative h-auto min-h-[260px] border-b border-[#1A1A24] lg:h-full lg:min-h-0 lg:border-b-0 lg:border-r"
+			class="relative h-auto border-b border-[#1A1A24] lg:h-full lg:min-h-0 lg:border-b-0 lg:border-r"
 		>
 			<AuthBranding {brand} {quote} {stats} />
 		</div>

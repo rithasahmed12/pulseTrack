@@ -22,9 +22,14 @@ export class TrendingController {
   }
 
   @Get('hashtags')
-  @ApiOperation({ summary: 'Top 20 hashtags by usage_count with growth_percent + tag-cloud weight.' })
-  async hashtags(): Promise<{ hashtags: TrendingHashtag[] }> {
-    return { hashtags: await this.trending.hashtags() };
+  @ApiOperation({
+    summary:
+      "Top 20 hashtags in this user's tracked posts (last 7d), with growth vs prior 7d + tag-cloud weight.",
+  })
+  async hashtags(
+    @CurrentUser() user: AuthenticatedUser,
+  ): Promise<{ hashtags: TrendingHashtag[] }> {
+    return { hashtags: await this.trending.hashtags(user.jwt) };
   }
 
   @Get('platform-comparison')

@@ -314,6 +314,8 @@ export interface Pagination {
   page: number;
   pageSize: number;
   hasMore: boolean;
+  total: number;
+  pageCount: number;
 }
 
 /* -----------------------------------------------------------------------------
@@ -409,17 +411,16 @@ export interface Connection {
  * settings
  * --------------------------------------------------------------------------- */
 
-export type SettingsTabId = 'security' | 'notifications' | 'appearance' | 'data';
+export type SettingsTabId = 'security' | 'notifications' | 'data';
 
 export interface SettingsTab {
   id: SettingsTabId;
   label: string;
   description: string;
-  icon: 'lock' | 'bell' | 'palette' | 'shield';
+  icon: 'lock' | 'bell' | 'shield';
 }
 
 export interface SecurityState {
-  twoFactorEnabled: boolean;
   lastPasswordChangeAt: string;
 }
 
@@ -428,20 +429,36 @@ export interface NotificationPreference {
   label: string;
   description: string;
   enabled: boolean;
-  icon: 'sparkles' | 'trending-up' | 'hash' | 'mail';
+  icon: 'sparkles' | 'trending-up' | 'hash' | 'mail' | 'refresh-cw' | 'alert-triangle';
 }
 
-export type AccentColorId = 'violet' | 'cyan' | 'rose' | 'amber';
+/* -----------------------------------------------------------------------------
+ * notifications
+ * --------------------------------------------------------------------------- */
 
-export interface AccentOption {
-  id: AccentColorId;
-  label: string;
-  hex: string;
+export type NotificationEventType =
+  | 'new_post'
+  | 'follower_spike'
+  | 'trending_hashtag'
+  | 'scrape_complete'
+  | 'scrape_failed';
+
+export interface NotificationItem {
+  id: string;
+  type: NotificationEventType;
+  platform: Platform | null;
+  profileUsername: string | null;
+  trackedAccountId: string | null;
+  /** For `new_post` events, the DB id of the post so the UI can deeplink to /posts?postId=<id>. */
+  postId: string | null;
+  message: string;
+  createdAt: string;
+  readAt: string | null;
 }
 
-export interface AppearanceState {
-  accentColor: AccentColorId;
-  sidebarStartsCollapsed: boolean;
+export interface NotificationsResponse {
+  items: NotificationItem[];
+  unreadCount: number;
 }
 
 export interface PasswordFormValues {

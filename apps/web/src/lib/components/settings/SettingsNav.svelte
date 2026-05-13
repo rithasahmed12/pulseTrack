@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Lock from '@lucide/svelte/icons/lock';
 	import Bell from '@lucide/svelte/icons/bell';
-	import Palette from '@lucide/svelte/icons/palette';
 	import Shield from '@lucide/svelte/icons/shield';
 	import type { Component } from 'svelte';
 	import type { SettingsTab, SettingsTabId } from '@pulsetrack/shared-types';
@@ -17,7 +16,6 @@
 	const ICON_MAP: Record<SettingsTab['icon'], Component> = {
 		lock: Lock,
 		bell: Bell,
-		palette: Palette,
 		shield: Shield
 	};
 </script>

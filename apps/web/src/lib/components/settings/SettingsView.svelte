@@ -1,8 +1,5 @@
 <script lang="ts">
 	import type {
-		AccentColorId,
-		AccentOption,
-		AppearanceState,
 		NotificationPreference,
 		PasswordFormValues,
 		SecurityState,
@@ -12,7 +9,6 @@
 	import SettingsNav from './SettingsNav.svelte';
 	import SecurityPane from './SecurityPane.svelte';
 	import NotificationsPane from './NotificationsPane.svelte';
-	import AppearancePane from './AppearancePane.svelte';
 	import DataPane from './DataPane.svelte';
 
 	interface Props {
@@ -20,15 +16,9 @@
 		activeTab: SettingsTabId;
 		security: SecurityState;
 		notificationPreferences: NotificationPreference[];
-		accentOptions: AccentOption[];
-		appearance: AppearanceState;
 		onTabChange?: (tab: SettingsTabId) => void;
 		onPasswordSubmit?: (values: PasswordFormValues) => void;
-		onTwoFactorToggle?: (enabled: boolean) => void;
-		onSetUp2FAClick?: () => void;
 		onNotificationToggle?: (id: string, enabled: boolean) => void;
-		onAccentChange?: (accent: AccentColorId) => void;
-		onSidebarDefaultToggle?: (collapsed: boolean) => void;
 		onClearCache?: () => void;
 		onExportCsv?: () => void;
 		onDeleteAccount?: () => void;
@@ -39,15 +29,9 @@
 		activeTab,
 		security,
 		notificationPreferences,
-		accentOptions,
-		appearance,
 		onTabChange,
 		onPasswordSubmit,
-		onTwoFactorToggle,
-		onSetUp2FAClick,
 		onNotificationToggle,
-		onAccentChange,
-		onSidebarDefaultToggle,
 		onClearCache,
 		onExportCsv,
 		onDeleteAccount
@@ -65,7 +49,7 @@
 			Settings
 		</h1>
 		<p class="mt-0.5 text-[13px] text-slate-400">
-			Tune your workspace — security, notifications, appearance, and data controls.
+			Tune your workspace — security, notifications, and data controls.
 		</p>
 	</header>
 
@@ -81,23 +65,11 @@
 			{#key activeTab}
 				<div style="animation: pane-rise 0.25s ease-out both;">
 					{#if activeTab === 'security'}
-						<SecurityPane
-							{security}
-							{onPasswordSubmit}
-							{onTwoFactorToggle}
-							{onSetUp2FAClick}
-						/>
+						<SecurityPane {security} {onPasswordSubmit} />
 					{:else if activeTab === 'notifications'}
 						<NotificationsPane
 							preferences={notificationPreferences}
 							onToggle={onNotificationToggle}
-						/>
-					{:else if activeTab === 'appearance'}
-						<AppearancePane
-							{accentOptions}
-							{appearance}
-							{onAccentChange}
-							{onSidebarDefaultToggle}
 						/>
 					{:else}
 						<DataPane {onClearCache} {onExportCsv} {onDeleteAccount} />

@@ -18,27 +18,60 @@
 		onScrapeNow?: () => void;
 		onTogglePaused?: (nextIsActive: boolean) => void;
 		onRemove?: () => void;
+		onPurge?: (typed: string) => Promise<boolean>;
 		onRetryScrape?: () => void;
 	}
 
-	let { profile, onCardClick, onScrapeNow, onTogglePaused, onRemove, onRetryScrape }: Props =
-		$props();
+	let {
+		profile,
+		onCardClick,
+		onScrapeNow,
+		onTogglePaused,
+		onRemove,
+		onPurge,
+		onRetryScrape
+	}: Props = $props();
 
-	let confirmingRemove = $state(false);
+	let confirmingDelete = $state(false);
 	let confirmRef: HTMLDivElement | undefined = $state();
+	let typedConfirm = $state('');
+	let purging = $state(false);
+	let purgeError = $state<string | null>(null);
 
 	const paused = $derived(!profile.isActive);
 	const failed = $derived(profile.scrapeStatus === 'failed');
 	const scraping = $derived(profile.scrapeStatus === 'scraping');
 	const engagementTierValue = $derived(engagementTier(profile.engagementRate));
+	const canPurge = $derived(typedConfirm === profile.username);
+
+	function resetConfirm() {
+		confirmingDelete = false;
+		typedConfirm = '';
+		purging = false;
+		purgeError = null;
+	}
+
+	async function submitPurge() {
+		if (!canPurge || purging) return;
+		purging = true;
+		purgeError = null;
+		const ok = (await onPurge?.(typedConfirm)) ?? false;
+		if (!ok) {
+			purging = false;
+			purgeError = 'Delete failed — try again.';
+			return;
+		}
+		// Card will unmount when the page invalidates and the row is gone.
+		resetConfirm();
+	}
 
 	onMount(() => {
 		function onDocClick(e: MouseEvent) {
-			if (!confirmingRemove) return;
-			if (!confirmRef?.contains(e.target as Node)) confirmingRemove = false;
+			if (!confirmingDelete) return;
+			if (!confirmRef?.contains(e.target as Node)) resetConfirm();
 		}
 		function onKey(e: KeyboardEvent) {
-			if (e.key === 'Escape') confirmingRemove = false;
+			if (e.key === 'Escape') resetConfirm();
 		}
 		document.addEventListener('mousedown', onDocClick);
 		document.addEventListener('keydown', onKey);
@@ -197,41 +230,86 @@
 			<div bind:this={confirmRef} class="relative">
 				<button
 					type="button"
-					onclick={() => (confirmingRemove = !confirmingRemove)}
-					aria-label="Remove from tracking"
-					title="Remove from tracking"
+					onclick={() => {
+						if (confirmingDelete) resetConfirm();
+						else confirmingDelete = true;
+					}}
+					aria-label="Delete permanently"
+					title="Delete permanently"
 					class="flex h-7 w-7 items-center justify-center rounded-md text-slate-500 transition-colors duration-150 hover:bg-rose-500/10 hover:text-rose-200"
 				>
 					<Trash2 class="h-3.5 w-3.5" strokeWidth={1.8} />
 				</button>
-				{#if confirmingRemove}
+				{#if confirmingDelete}
 					<div
 						role="dialog"
-						aria-label="Confirm remove"
-						class="absolute right-0 top-[calc(100%+6px)] z-20 w-56 overflow-hidden rounded-lg border border-[#252535] bg-[#13131E] p-3 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.7)]"
+						aria-label="Confirm permanent deletion"
+						class="absolute right-0 top-[calc(100%+6px)] z-20 w-72 overflow-hidden rounded-lg border border-rose-500/30 bg-[#13131E] p-3 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.7)]"
 					>
-						<p class="mb-2.5 text-[12px] leading-snug text-slate-300">
-							Stop tracking
-							<span class="font-medium text-slate-100">@{profile.username}</span>? Historical data
-							is kept.
-						</p>
-						<div class="flex justify-end gap-1.5">
+						<header class="mb-2 flex items-start gap-2">
+							<span
+								class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-rose-500/15 text-rose-200"
+							>
+								<AlertTriangle class="h-3.5 w-3.5" strokeWidth={2} />
+							</span>
+							<div class="min-w-0">
+								<p class="text-[13px] font-semibold tracking-tight text-rose-100">
+									Delete permanently
+								</p>
+								<p class="mt-0.5 text-[11.5px] leading-snug text-rose-200/70">
+									Removes the profile and all its posts, snapshots, and scrape history. Cannot be
+									undone.
+								</p>
+							</div>
+						</header>
+						<label
+							for={`purge-${profile.id}`}
+							class="block text-[11.5px] leading-snug text-slate-300"
+						>
+							Type
+							<span
+								class="font-mono mx-0.5 rounded bg-rose-500/15 px-1 py-px text-rose-100"
+							>@{profile.username}</span> to confirm
+						</label>
+						<input
+							id={`purge-${profile.id}`}
+							type="text"
+							autocomplete="off"
+							spellcheck="false"
+							value={typedConfirm}
+							oninput={(e) => (typedConfirm = (e.currentTarget as HTMLInputElement).value)}
+							placeholder={profile.username}
+							disabled={purging}
+							class="font-mono mt-1.5 h-8 w-full rounded-md border bg-[#0A0A0F] px-2 text-[12.5px] tracking-[0.06em] text-slate-100 placeholder:text-slate-700 outline-none transition-colors duration-150 {canPurge
+								? 'border-rose-500/50 shadow-[0_0_0_3px_rgba(244,63,94,0.15)]'
+								: 'border-rose-500/15'}"
+						/>
+						{#if purgeError}
+							<p role="alert" class="mt-1.5 text-[11px] text-rose-300">{purgeError}</p>
+						{/if}
+						<div class="mt-2.5 flex justify-end gap-1.5">
 							<button
 								type="button"
-								onclick={() => (confirmingRemove = false)}
-								class="rounded-md px-2 py-1 text-[12px] text-slate-400 hover:bg-white/[0.04] hover:text-slate-200"
+								onclick={resetConfirm}
+								disabled={purging}
+								class="rounded-md px-2 py-1 text-[12px] text-slate-400 hover:bg-white/[0.04] hover:text-slate-200 disabled:cursor-not-allowed disabled:opacity-50"
 							>
 								Cancel
 							</button>
 							<button
 								type="button"
-								onclick={() => {
-									confirmingRemove = false;
-									onRemove?.();
-								}}
-								class="rounded-md bg-rose-500/15 px-2 py-1 text-[12px] font-medium text-rose-200 hover:bg-rose-500/25"
+								onclick={submitPurge}
+								disabled={!canPurge || purging}
+								class="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[12px] font-medium transition-colors duration-150 {canPurge
+									? 'bg-rose-500 text-white shadow-[0_8px_24px_-12px_rgba(244,63,94,0.6)] hover:bg-rose-400'
+									: 'cursor-not-allowed border border-rose-500/20 bg-rose-500/[0.06] text-rose-300/60'}"
 							>
-								Remove
+								{#if purging}
+									<Loader2 class="h-3 w-3 animate-spin" strokeWidth={2} />
+									Deleting…
+								{:else}
+									Delete
+								{/if}
 							</button>
 						</div>
 					</div>

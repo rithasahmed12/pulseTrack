@@ -1,13 +1,10 @@
 import { error, fail, redirect } from '@sveltejs/kit';
-import type { AccentColorId } from '@pulsetrack/shared-types';
 import { ApiError } from '$lib/api/client';
 import {
 	changePassword,
 	deleteAccount,
 	getSettings,
-	toggleNotification,
-	toggleTwoFactor,
-	updateAppearance
+	toggleNotification
 } from '$lib/api/settings';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -41,47 +38,6 @@ export const actions: Actions = {
 		} catch (err) {
 			if (err instanceof ApiError)
 				return fail(err.status, { action: 'notification', error: err.message });
-			throw err;
-		}
-	},
-
-	appearance: async ({ request, locals, fetch }) => {
-		const jwt = await requireJwt(locals);
-		const data = await request.formData();
-		const accent = data.get('accentColor');
-		const sidebar = data.get('sidebarStartsCollapsed');
-		const patch: { accentColor?: AccentColorId; sidebarStartsCollapsed?: boolean } = {};
-		if (
-			accent === 'violet' ||
-			accent === 'cyan' ||
-			accent === 'rose' ||
-			accent === 'amber'
-		) {
-			patch.accentColor = accent;
-		}
-		if (sidebar === 'true' || sidebar === 'false') {
-			patch.sidebarStartsCollapsed = sidebar === 'true';
-		}
-		try {
-			await updateAppearance(patch, { jwt, fetch });
-			return { action: 'appearance', ok: true };
-		} catch (err) {
-			if (err instanceof ApiError)
-				return fail(err.status, { action: 'appearance', error: err.message });
-			throw err;
-		}
-	},
-
-	twoFactor: async ({ request, locals, fetch }) => {
-		const jwt = await requireJwt(locals);
-		const data = await request.formData();
-		const enabled = data.get('enabled') === 'true';
-		try {
-			await toggleTwoFactor({ enabled }, { jwt, fetch });
-			return { action: 'twoFactor', ok: true };
-		} catch (err) {
-			if (err instanceof ApiError)
-				return fail(err.status, { action: 'twoFactor', error: err.message });
 			throw err;
 		}
 	},

@@ -8,8 +8,10 @@ export class SupabaseService {
   /** Service-role client; bypasses RLS. Use for backend-owned writes (scraper, webhooks, seed). */
   readonly admin: SupabaseClient;
 
-  private readonly url: string;
-  private readonly anonKey: string;
+  /** Project URL — exposed so services can hit GoTrue endpoints (e.g. MFA) directly. */
+  readonly url: string;
+  /** Anon key — needed as the `apikey` header on direct GoTrue calls. */
+  readonly anonKey: string;
 
   constructor(config: ConfigService<EnvVars, true>) {
     this.url = config.get('SUPABASE_URL', { infer: true });

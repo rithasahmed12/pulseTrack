@@ -78,7 +78,6 @@ export class ScraperService {
       await this.upsertPosts(account.id, posts, postEngagementRates);
       await this.updateAccount(account.id, profile, accountEngagement);
       await this.snapshotFollowers(account.id, followers);
-      await this.bumpHashtags(posts.flatMap((p) => p.hashtags));
       await this.emitNewPostEvents(account, newPosts);
       await this.completeJob(jobId, posts.length);
       await this.emitActivity(account, 'scrape_complete', `Scrape complete — ${posts.length} posts`);
@@ -279,49 +278,34 @@ export class ScraperService {
       .insert({ tracked_account_id: trackedAccountId, followers_count: followersCount });
   }
 
-  private async bumpHashtags(tags: string[]): Promise<void> {
-    if (tags.length === 0) return;
-    const unique = [...new Set(tags.map((t) => t.toLowerCase()))];
-    const now = new Date().toISOString();
-    // PostgREST upsert with onConflict on the unique `tag` column.
-    const rows = unique.map((tag) => ({ tag, usage_count: 1, last_seen_at: now }));
-    const { error } = await this.supabase.admin
-      .from('hashtags')
-      .upsert(rows, { onConflict: 'tag', ignoreDuplicates: false });
-    if (error) {
-      this.logger.warn(`bumpHashtags upsert warning: ${error.message}`);
-    }
-    // Increment usage_count for tags that already existed. PostgREST does not
-    // support `usage_count = usage_count + 1` in an upsert, so we issue a
-    // follow-up RPC-less update via the .rpc(...) escape hatch is overkill —
-    // we fetch existing rows and update in a single statement instead.
-    const { data: existing } = await this.supabase.admin
-      .from('hashtags')
-      .select('tag, usage_count')
-      .in('tag', unique);
-    if (!existing) return;
-    await Promise.all(
-      existing.map((row) =>
-        this.supabase.admin
-          .from('hashtags')
-          .update({ usage_count: (row.usage_count as number) + 1, last_seen_at: now })
-          .eq('tag', row.tag as string),
-      ),
-    );
-  }
-
   private async emitNewPostEvents(
     account: TrackedAccountRow,
     newPosts: NormalizedPost[],
   ): Promise<void> {
     if (newPosts.length === 0) return;
+    // Look up the DB ids of the freshly-upserted posts so the notification bell
+    // can deeplink straight to /posts?postId=<id> rather than to the profile page.
+    const platformPostIds = newPosts.map((p) => p.platformPostId);
+    const { data: postIdRows } = await this.supabase.admin
+      .from('posts')
+      .select('id, platform_post_id')
+      .eq('tracked_account_id', account.id)
+      .in('platform_post_id', platformPostIds);
+    const idByPlatformPostId = new Map<string, string>();
+    for (const row of (postIdRows as Array<{ id: string; platform_post_id: string }> | null) ?? []) {
+      idByPlatformPostId.set(row.platform_post_id, row.id);
+    }
     const rows = newPosts.map((p) => ({
       user_id: account.user_id,
       tracked_account_id: account.id,
       event_type: 'new_post',
       platform: account.platform,
       message: `New ${p.postType} from @${account.username}`,
-      metadata: { platform_post_id: p.platformPostId, posted_at: p.postedAt },
+      metadata: {
+        post_id: idByPlatformPostId.get(p.platformPostId) ?? null,
+        platform_post_id: p.platformPostId,
+        posted_at: p.postedAt,
+      },
     }));
     await this.supabase.admin.from('activity_log').insert(rows);
   }

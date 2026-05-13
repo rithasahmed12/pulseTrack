@@ -7,6 +7,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { validateEnv } from './config/env.validation';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { HealthModule } from './health/health.module';
+import { NotificationsModule } from './notifications/notifications.module';
 import { PostsModule } from './posts/posts.module';
 import { ProfileDetailModule } from './profile-detail/profile-detail.module';
 import { ScraperModule } from './scraper/scraper.module';
@@ -30,6 +31,7 @@ import { WebhooksModule } from './webhooks/webhooks.module';
     DashboardModule,
     AppProfileModule,
     SettingsModule,
+    NotificationsModule,
     WebhooksModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: JwtAuthGuard }],

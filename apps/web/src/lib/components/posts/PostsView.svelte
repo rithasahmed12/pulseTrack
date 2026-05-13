@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount, untrack } from 'svelte';
-	import Loader2 from '@lucide/svelte/icons/loader-2';
 	import Inbox from '@lucide/svelte/icons/inbox';
 	import type {
 		DateRange,
@@ -10,6 +8,7 @@
 		PostsPlatformFilter,
 		PostTypeFilter
 	} from '@pulsetrack/shared-types';
+	import PaginationNav from '$lib/components/shared/Pagination.svelte';
 	import FilterBar from './FilterBar.svelte';
 	import PostCard from './PostCard.svelte';
 
@@ -26,14 +25,13 @@
 		filterControls: FilterControls;
 		dateRangeOptions: DateRangeOption[];
 		pagination: Pagination;
-		loadingMore?: boolean;
 		onPostTypeChange?: (type: PostTypeFilter) => void;
 		onPlatformChange?: (platform: PostsPlatformFilter) => void;
 		onDateRangeChange?: (range: DateRange) => void;
 		onMinEngagementChange?: (value: number) => void;
 		onResetFilters?: () => void;
 		onPostClick?: (post: Post) => void;
-		onLoadMore?: () => void;
+		onPageChange?: (page: number) => void;
 	}
 
 	let {
@@ -42,38 +40,23 @@
 		filterControls,
 		dateRangeOptions,
 		pagination,
-		loadingMore = false,
 		onPostTypeChange,
 		onPlatformChange,
 		onDateRangeChange,
 		onMinEngagementChange,
 		onResetFilters,
 		onPostClick,
-		onLoadMore
+		onPageChange
 	}: Props = $props();
-
-	let sentinel: HTMLDivElement | undefined = $state();
-
-	onMount(() => {
-		if (!sentinel) return;
-		const io = new IntersectionObserver(
-			(entries) => {
-				for (const entry of entries) {
-					if (entry.isIntersecting) {
-						const canLoad = untrack(() => pagination.hasMore && !loadingMore);
-						if (canLoad) onLoadMore?.();
-						break;
-					}
-				}
-			},
-			{ rootMargin: '200px' }
-		);
-		io.observe(sentinel);
-		return () => io.disconnect();
-	});
 
 	const visibleCount = $derived(posts.length);
 	const hasResults = $derived(visibleCount > 0);
+	const rangeStart = $derived(
+		pagination.total === 0 ? 0 : (pagination.page - 1) * pagination.pageSize + 1
+	);
+	const rangeEnd = $derived(
+		Math.min(pagination.page * pagination.pageSize, pagination.total)
+	);
 </script>
 
 <div>
@@ -98,7 +81,9 @@
 			>
 				<Inbox class="h-5 w-5 text-slate-500" strokeWidth={1.5} />
 			</div>
-			<h3 class="text-[15px] font-semibold tracking-tight text-slate-100">No posts match these filters</h3>
+			<h3 class="text-[15px] font-semibold tracking-tight text-slate-100">
+				No posts match these filters
+			</h3>
 			<p class="mt-1 max-w-md text-[13px] text-slate-400">
 				Try lowering the minimum engagement floor or widening the date range — or reset everything.
 			</p>
@@ -122,21 +107,16 @@
 			{/each}
 		</div>
 
-		<div
-			bind:this={sentinel}
-			class="mt-6 flex items-center justify-center py-6"
-			aria-live="polite"
-		>
-			{#if pagination.hasMore}
-				<span class="inline-flex items-center gap-2 text-[12px] text-slate-500">
-					<Loader2 class="h-3.5 w-3.5 animate-spin text-violet-300" />
-					Loading more posts…
-				</span>
-			{:else}
-				<p
-					class="font-mono text-center text-[10.5px] uppercase tracking-[0.22em] text-slate-600"
-				>
-					· all caught up ·
+		<div class="mt-6 flex flex-col items-center gap-2">
+			<PaginationNav
+				page={pagination.page}
+				pageCount={pagination.pageCount}
+				onPageChange={(p) => onPageChange?.(p)}
+				ariaLabel="Posts pagination"
+			/>
+			{#if pagination.total > 0}
+				<p class="font-mono text-[10.5px] uppercase tracking-[0.22em] text-slate-600">
+					Showing {rangeStart}–{rangeEnd} of {pagination.total}
 				</p>
 			{/if}
 		</div>

@@ -3,20 +3,59 @@ import {
 	addTrackedAccount,
 	listTrackedAccounts,
 	pauseTrackedAccount,
+	purgeTrackedAccount,
 	removeTrackedAccount,
 	resumeTrackedAccount,
 	triggerScrape
 } from '$lib/api/tracked-accounts';
 import { ApiError } from '$lib/api/client';
-import type { Platform } from '@pulsetrack/shared-types';
+import type { Platform, PlatformFilter, SortOption } from '@pulsetrack/shared-types';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals, fetch }) => {
+const PLATFORM_FILTER_VALUES: PlatformFilter[] = ['all', 'instagram', 'tiktok'];
+const SORT_VALUES: SortOption[] = [
+	'recently-added',
+	'most-followers',
+	'highest-engagement',
+	'last-scraped'
+];
+
+function parsePlatformFilter(value: string | null): PlatformFilter {
+	return value && PLATFORM_FILTER_VALUES.includes(value as PlatformFilter)
+		? (value as PlatformFilter)
+		: 'all';
+}
+function parseSort(value: string | null): SortOption {
+	return value && SORT_VALUES.includes(value as SortOption)
+		? (value as SortOption)
+		: 'recently-added';
+}
+function parsePage(value: string | null): number {
+	if (!value) return 1;
+	const n = parseInt(value, 10);
+	if (!Number.isFinite(n) || n < 1) return 1;
+	return Math.min(n, 10000);
+}
+
+export const load: PageServerLoad = async ({ locals, fetch, url }) => {
 	const { session } = await locals.safeGetSession();
 	if (!session) throw error(401, 'Not signed in');
+
+	const platform = parsePlatformFilter(url.searchParams.get('platform'));
+	const sort = parseSort(url.searchParams.get('sort'));
+	const q = (url.searchParams.get('q') ?? '').slice(0, 200).trim();
+	const page = parsePage(url.searchParams.get('page'));
+
 	try {
-		const profiles = await listTrackedAccounts({ jwt: session.access_token, fetch });
-		return { profiles };
+		const list = await listTrackedAccounts(
+			{ page, limit: 8, platform, q: q || undefined, sort },
+			{ jwt: session.access_token, fetch }
+		);
+		return {
+			profiles: list.profiles,
+			pagination: list.pagination,
+			filters: { platform, sort, search: q, page }
+		};
 	} catch (err) {
 		if (err instanceof ApiError) {
 			throw error(err.status, err.message);
@@ -100,6 +139,28 @@ export const actions: Actions = {
 			return { action: 'remove', ok: true };
 		} catch (err) {
 			if (err instanceof ApiError) return fail(err.status, { action: 'remove', error: err.message });
+			throw err;
+		}
+	},
+
+	purge: async ({ request, locals, fetch }) => {
+		const jwt = await requireJwt(locals);
+		const data = await request.formData();
+		const id = (data.get('id') as string | null) ?? '';
+		const confirm = (data.get('confirm') as string | null) ?? '';
+		const expected = (data.get('expected') as string | null) ?? '';
+		if (!id) return fail(400, { action: 'purge', error: 'Missing id.' });
+		if (!expected || confirm !== expected) {
+			return fail(400, {
+				action: 'purge',
+				error: 'Confirmation does not match the username — type it exactly to confirm.'
+			});
+		}
+		try {
+			await purgeTrackedAccount(id, { jwt, fetch });
+			return { action: 'purge', ok: true };
+		} catch (err) {
+			if (err instanceof ApiError) return fail(err.status, { action: 'purge', error: err.message });
 			throw err;
 		}
 	}

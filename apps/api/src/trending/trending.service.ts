@@ -34,12 +34,6 @@ interface PostRowWithAccount {
   } | null;
 }
 
-interface HashtagRow {
-  tag: string;
-  usage_count: number;
-  growth_percent: number | null;
-}
-
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 @Injectable()
@@ -88,21 +82,67 @@ export class TrendingService {
     return trendingRows.map(toTrendingPost);
   }
 
-  async hashtags(): Promise<TrendingHashtag[]> {
-    const { data, error } = await this.supabase.admin
-      .from('hashtags')
-      .select('tag, usage_count, growth_percent')
-      .order('usage_count', { ascending: false })
-      .limit(20);
-    if (error) return [];
-    const rows = (data as HashtagRow[]) ?? [];
-    const max = rows[0]?.usage_count ?? 1;
-    return rows.map((row) => ({
-      tag: row.tag,
-      usageCount: row.usage_count,
-      growthPercent: row.growth_percent ?? 0,
-      weight: max > 0 ? Math.min(1, row.usage_count / max) : 0,
-    }));
+  async hashtags(jwt: string): Promise<TrendingHashtag[]> {
+    // Per-user trending: aggregate hashtags from THIS user's posts only.
+    // Posts table has RLS scoped to `tracked_accounts.user_id = auth.uid()`,
+    // so a forUser(jwt) client already filters correctly.
+    const client = this.supabase.forUser(jwt);
+    const now = Date.now();
+    const sevenDaysAgo = new Date(now - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const fourteenDaysAgo = new Date(now - 14 * 24 * 60 * 60 * 1000).toISOString();
+
+    const [currentRes, priorRes] = await Promise.all([
+      client
+        .from('posts')
+        .select('hashtags')
+        .gte('posted_at', sevenDaysAgo),
+      client
+        .from('posts')
+        .select('hashtags')
+        .gte('posted_at', fourteenDaysAgo)
+        .lt('posted_at', sevenDaysAgo),
+    ]);
+
+    if (currentRes.error) return [];
+
+    const tally = (rows: Array<{ hashtags: string[] | null }> | null): Map<string, number> => {
+      const counts = new Map<string, number>();
+      for (const row of rows ?? []) {
+        for (const raw of row.hashtags ?? []) {
+          const tag = (raw ?? '').trim();
+          if (!tag) continue;
+          counts.set(tag, (counts.get(tag) ?? 0) + 1);
+        }
+      }
+      return counts;
+    };
+
+    const currentCounts = tally(
+      currentRes.data as Array<{ hashtags: string[] | null }> | null,
+    );
+    const priorCounts = priorRes.error
+      ? new Map<string, number>()
+      : tally(priorRes.data as Array<{ hashtags: string[] | null }> | null);
+
+    const sorted = [...currentCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20);
+    if (sorted.length === 0) return [];
+    const max = sorted[0][1];
+
+    return sorted.map(([tag, count]) => {
+      const prior = priorCounts.get(tag) ?? 0;
+      const growthPercent =
+        prior === 0
+          ? count > 0
+            ? 100
+            : 0
+          : Math.round(((count - prior) / prior) * 1000) / 10;
+      return {
+        tag,
+        usageCount: count,
+        growthPercent,
+        weight: max > 0 ? Math.min(1, count / max) : 0,
+      };
+    });
   }
 
   async platformComparison(jwt: string): Promise<PlatformSeries[]> {

@@ -103,48 +103,50 @@
 	</li>
 {/snippet}
 
-<nav aria-label="Primary" class="flex h-full flex-col">
-	<div class="flex items-center justify-between px-3 pb-3 pt-4">
-		<a
-			href="/dashboard"
-			onclick={(e) => navigate(e, '/dashboard')}
-			class="group flex items-center gap-2.5 overflow-hidden"
-		>
-			<span
-				class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] bg-gradient-to-br from-violet-500 to-cyan-400 shadow-[0_0_24px_rgba(124,58,237,0.45)]"
-				aria-hidden="true"
+<nav aria-label="Primary" class="flex h-full flex-col overflow-x-hidden">
+	<div
+		class="flex items-center gap-2 px-3 pb-3 pt-4 {collapsed ? 'justify-center' : 'justify-between'}"
+	>
+		{#if !collapsed}
+			<a
+				href="/dashboard"
+				onclick={(e) => navigate(e, '/dashboard')}
+				class="group flex min-w-0 items-center gap-2.5 overflow-hidden"
 			>
-				<span class="absolute inset-[2px] rounded-[8px] bg-[#0A0A0F]"></span>
 				<span
-					class="relative h-2 w-2 rounded-full bg-gradient-to-br from-violet-300 to-cyan-300 shadow-[0_0_8px_rgba(124,58,237,0.9)]"
-				></span>
-			</span>
-			<span
-				class="flex flex-col leading-tight transition-all duration-200 {collapsed
-					? 'pointer-events-none w-0 -translate-x-2 opacity-0'
-					: 'w-auto opacity-100'}"
-			>
-				<span class="text-[15px] font-semibold tracking-tight text-slate-100">PulseTrack</span>
-				<span class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500"
-					>v0.1 · beta</span
+					class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] bg-gradient-to-br from-violet-500 to-cyan-400 shadow-[0_0_24px_rgba(124,58,237,0.45)]"
+					aria-hidden="true"
 				>
-			</span>
-		</a>
+					<span class="absolute inset-[2px] rounded-[8px] bg-[#0A0A0F]"></span>
+					<span
+						class="relative h-2 w-2 rounded-full bg-gradient-to-br from-violet-300 to-cyan-300 shadow-[0_0_8px_rgba(124,58,237,0.9)]"
+					></span>
+				</span>
+				<span class="flex min-w-0 flex-col leading-tight">
+					<span class="truncate text-[15px] font-semibold tracking-tight text-slate-100"
+						>PulseTrack</span
+					>
+					<span class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500"
+						>v0.1 · beta</span
+					>
+				</span>
+			</a>
+		{/if}
 
-		<button
-			type="button"
-			onclick={onToggleCollapsed}
-			aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-			class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-100 {collapsed
-				? 'absolute right-2 top-4'
-				: ''}"
-		>
-			{#if collapsed}
-				<ChevronsRight class="h-4 w-4" />
-			{:else}
-				<ChevronsLeft class="h-4 w-4" />
-			{/if}
-		</button>
+		{#if onToggleCollapsed}
+			<button
+				type="button"
+				onclick={onToggleCollapsed}
+				aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+				class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-100"
+			>
+				{#if collapsed}
+					<ChevronsRight class="h-4 w-4" />
+				{:else}
+					<ChevronsLeft class="h-4 w-4" />
+				{/if}
+			</button>
+		{/if}
 	</div>
 
 	<div class="px-3 pb-3">

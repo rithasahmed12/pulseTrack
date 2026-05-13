@@ -34,6 +34,12 @@ function parseMinEngagement(value: string | null): number {
 	if (Number.isNaN(n)) return 0;
 	return Math.max(0, Math.min(10, n));
 }
+function parsePage(value: string | null): number {
+	if (!value) return 1;
+	const n = parseInt(value, 10);
+	if (!Number.isFinite(n) || n < 1) return 1;
+	return Math.min(n, 10000);
+}
 function dateRangeIso(range: DateRange): string {
 	const MS = {
 		'24h': 24 * 60 * 60 * 1000,
@@ -52,6 +58,7 @@ export const load: PageServerLoad = async ({ locals, fetch, url }) => {
 	const platform = parsePlatform(url.searchParams.get('platform'));
 	const dateRange = parseDateRange(url.searchParams.get('dateRange'));
 	const minEngagement = parseMinEngagement(url.searchParams.get('minEng'));
+	const page = parsePage(url.searchParams.get('page'));
 	const q = (url.searchParams.get('q') ?? '').slice(0, 200).trim();
 	const requestedPostId = url.searchParams.get('postId');
 
@@ -62,8 +69,8 @@ export const load: PageServerLoad = async ({ locals, fetch, url }) => {
 				platform,
 				dateFrom: dateRangeIso(dateRange),
 				minEngagement,
-				page: 1,
-				limit: 24,
+				page,
+				limit: 15,
 				sortBy: 'posted-at',
 				q: q || undefined
 			},
@@ -82,7 +89,7 @@ export const load: PageServerLoad = async ({ locals, fetch, url }) => {
 		return {
 			posts: list.posts,
 			pagination: list.pagination,
-			filters: { postType, platform, dateRange, minEngagement, q },
+			filters: { postType, platform, dateRange, minEngagement, q, page },
 			openPost
 		};
 	} catch (err) {
@@ -97,6 +104,7 @@ export type LoadedFilters = {
 	dateRange: DateRange;
 	minEngagement: number;
 	q: string;
+	page: number;
 };
 
 export type { DateRange, PostType, PostsPlatformFilter, PostTypeFilter };

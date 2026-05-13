@@ -1,9 +1,4 @@
-import type {
-	AccentColorId,
-	AppearanceState,
-	NotificationPreference,
-	SecurityState
-} from '@pulsetrack/shared-types';
+import type { NotificationPreference, SecurityState } from '@pulsetrack/shared-types';
 import { api } from './client';
 
 interface ApiCallOptions {
@@ -14,7 +9,6 @@ interface ApiCallOptions {
 export interface SettingsResponse {
 	security: SecurityState;
 	notifications: NotificationPreference[];
-	appearance: AppearanceState;
 }
 
 export function getSettings(opts: ApiCallOptions): Promise<SettingsResponse> {
@@ -26,30 +20,6 @@ export function toggleNotification(
 	opts: ApiCallOptions
 ): Promise<NotificationPreference[]> {
 	return api('/settings/notifications', {
-		method: 'PATCH',
-		body,
-		jwt: opts.jwt,
-		fetch: opts.fetch
-	});
-}
-
-export function updateAppearance(
-	body: { accentColor?: AccentColorId; sidebarStartsCollapsed?: boolean },
-	opts: ApiCallOptions
-): Promise<AppearanceState> {
-	return api('/settings/appearance', {
-		method: 'PATCH',
-		body,
-		jwt: opts.jwt,
-		fetch: opts.fetch
-	});
-}
-
-export function toggleTwoFactor(
-	body: { enabled: boolean },
-	opts: ApiCallOptions
-): Promise<SecurityState> {
-	return api('/settings/two-factor', {
 		method: 'PATCH',
 		body,
 		jwt: opts.jwt,
