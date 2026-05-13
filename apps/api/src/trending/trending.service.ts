@@ -69,6 +69,8 @@ export class TrendingService {
       post_type: row.post_type,
       caption: row.caption,
       thumbnail_url: row.thumbnail_url,
+      video_url: null,
+      media_urls: null,
       likes_count: row.likes_count,
       comments_count: row.comments_count,
       shares_count: row.shares_count,

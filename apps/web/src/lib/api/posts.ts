@@ -21,6 +21,7 @@ export interface ListPostsQuery {
 	page?: number;
 	limit?: number;
 	sortBy?: 'engagement' | 'posted-at' | 'likes';
+	q?: string;
 }
 
 export interface PostsListResponse {
@@ -43,6 +44,7 @@ export function listPosts(
 	if (query.page) params.set('page', String(query.page));
 	if (query.limit) params.set('limit', String(query.limit));
 	if (query.sortBy) params.set('sortBy', query.sortBy);
+	if (query.q) params.set('q', query.q);
 	const qs = params.toString();
 	return api(`/posts${qs ? `?${qs}` : ''}`, {
 		method: 'GET',

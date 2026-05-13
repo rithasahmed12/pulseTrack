@@ -71,6 +71,16 @@
 		void goto('/posts', { keepFocus: true, noScroll: true });
 	}
 
+	function clearSearch() {
+		const params = new URLSearchParams(page.url.searchParams);
+		params.delete('q');
+		params.delete('postId');
+		void goto(`/posts${params.toString() ? `?${params.toString()}` : ''}`, {
+			keepFocus: true,
+			noScroll: true
+		});
+	}
+
 	function loadMoreUrl(nextPage: number): string {
 		const params = new URLSearchParams();
 		if (data.filters.postType !== 'all') params.set('postType', data.filters.postType);
@@ -78,6 +88,7 @@
 		if (data.filters.dateRange !== '30d') params.set('dateRange', data.filters.dateRange);
 		if (data.filters.minEngagement > 0)
 			params.set('minEng', String(data.filters.minEngagement));
+		if (data.filters.q) params.set('q', data.filters.q);
 		params.set('page', String(nextPage));
 		return `/posts/load-more?${params.toString()}`;
 	}
@@ -132,6 +143,25 @@
 <svelte:head>
 	<title>Posts · PulseTrack</title>
 </svelte:head>
+
+{#if data.filters.q}
+	<div class="mb-4 flex items-center gap-2">
+		<span
+			class="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[12px] text-violet-100"
+		>
+			<span class="font-mono text-[10px] uppercase tracking-[0.18em] text-violet-300/80">Search</span>
+			<span class="font-medium">"{data.filters.q}"</span>
+			<button
+				type="button"
+				aria-label="Clear search"
+				onclick={clearSearch}
+				class="-mr-1 flex h-4 w-4 items-center justify-center rounded-full text-violet-200/80 hover:bg-white/10 hover:text-white"
+			>
+				×
+			</button>
+		</span>
+	</div>
+{/if}
 
 <PostsView
 	{posts}

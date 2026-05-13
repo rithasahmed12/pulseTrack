@@ -16,9 +16,16 @@
 		collapsed?: boolean;
 		onToggleCollapsed?: () => void;
 		onNavigate?: (href: string) => void;
+		onSearchClick?: () => void;
 	}
 
-	let { items, collapsed = false, onToggleCollapsed, onNavigate }: Props = $props();
+	let {
+		items,
+		collapsed = false,
+		onToggleCollapsed,
+		onNavigate,
+		onSearchClick
+	}: Props = $props();
 
 	const ICONS: Record<string, Component> = {
 		'/dashboard': LayoutDashboard,
@@ -143,6 +150,8 @@
 	<div class="px-3 pb-3">
 		<button
 			type="button"
+			onclick={onSearchClick}
+			aria-label="Search posts"
 			class="group flex w-full items-center gap-2.5 rounded-lg border border-[#1E1E2E] bg-[#0F0F18] px-2.5 py-2 text-left transition-all duration-200 hover:border-violet-500/40 hover:bg-[#13131E] {collapsed
 				? 'justify-center'
 				: ''}"

@@ -52,6 +52,7 @@ export const load: PageServerLoad = async ({ locals, fetch, url }) => {
 	const platform = parsePlatform(url.searchParams.get('platform'));
 	const dateRange = parseDateRange(url.searchParams.get('dateRange'));
 	const minEngagement = parseMinEngagement(url.searchParams.get('minEng'));
+	const q = (url.searchParams.get('q') ?? '').slice(0, 200).trim();
 	const requestedPostId = url.searchParams.get('postId');
 
 	try {
@@ -63,7 +64,8 @@ export const load: PageServerLoad = async ({ locals, fetch, url }) => {
 				minEngagement,
 				page: 1,
 				limit: 24,
-				sortBy: 'posted-at'
+				sortBy: 'posted-at',
+				q: q || undefined
 			},
 			{ jwt: session.access_token, fetch }
 		);
@@ -80,7 +82,7 @@ export const load: PageServerLoad = async ({ locals, fetch, url }) => {
 		return {
 			posts: list.posts,
 			pagination: list.pagination,
-			filters: { postType, platform, dateRange, minEngagement },
+			filters: { postType, platform, dateRange, minEngagement, q },
 			openPost
 		};
 	} catch (err) {
@@ -94,6 +96,7 @@ export type LoadedFilters = {
 	platform: PostsPlatformFilter;
 	dateRange: DateRange;
 	minEngagement: number;
+	q: string;
 };
 
 export type { DateRange, PostType, PostsPlatformFilter, PostTypeFilter };

@@ -41,13 +41,16 @@ export class InstagramNormalizer {
     const likes = raw.likesCount ?? 0;
     const comments = raw.commentsCount ?? 0;
     const views = postType === 'photo' ? null : raw.videoViewCount ?? raw.videoPlayCount ?? null;
+    const isPlayable = postType === 'video' || postType === 'reel';
+    const mediaUrls = postType === 'carousel' ? this.extractCarouselSlides(raw.childPosts) : [];
     return {
       platform: 'instagram',
       platformPostId: raw.id,
       postType,
       caption: raw.caption ?? null,
       thumbnailUrl: raw.displayUrl ?? null,
-      mediaUrls: raw.images && raw.images.length > 0 ? raw.images : raw.displayUrl ? [raw.displayUrl] : [],
+      mediaUrls,
+      videoUrl: isPlayable ? raw.videoUrl ?? null : null,
       likesCount: likes,
       commentsCount: comments,
       sharesCount: null,
@@ -58,6 +61,27 @@ export class InstagramNormalizer {
       videoDurationSeconds: raw.videoDuration ?? null,
       rawData: raw,
     };
+  }
+
+  /**
+   * Apify returns the carousel slides under `childPosts[]`. Each child has
+   * `{ type, displayUrl, videoUrl }`. We collect `displayUrl` for image
+   * children and the cover frame (displayUrl) for video children, falling
+   * back to videoUrl only when displayUrl is missing so the slide count
+   * stays consistent with the actual carousel size.
+   */
+  private extractCarouselSlides(childPosts: unknown): string[] {
+    if (!Array.isArray(childPosts)) return [];
+    type CarouselChild = { displayUrl?: unknown; videoUrl?: unknown };
+    return (childPosts as CarouselChild[])
+      .map((child) => {
+        const display = child?.displayUrl;
+        if (typeof display === 'string' && display.length > 0) return display;
+        const video = child?.videoUrl;
+        if (typeof video === 'string' && video.length > 0) return video;
+        return null;
+      })
+      .filter((url): url is string => url !== null);
   }
 
   private mapPostType(raw: RawInstagramPost): PostType {

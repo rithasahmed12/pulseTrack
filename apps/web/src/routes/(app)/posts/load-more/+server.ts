@@ -26,6 +26,7 @@ export const GET: RequestHandler = async ({ locals, fetch, url }) => {
 	const platformParam = url.searchParams.get('platform');
 	const dateParam = url.searchParams.get('dateRange');
 	const minEngParam = url.searchParams.get('minEng');
+	const qParam = (url.searchParams.get('q') ?? '').slice(0, 200).trim();
 	const pageParam = Number(url.searchParams.get('page') ?? '2');
 
 	const postType: PostTypeFilter = POST_TYPE_VALUES.includes(typeParam as PostTypeFilter)
@@ -49,7 +50,8 @@ export const GET: RequestHandler = async ({ locals, fetch, url }) => {
 				minEngagement,
 				page,
 				limit: 24,
-				sortBy: 'posted-at'
+				sortBy: 'posted-at',
+				q: qParam || undefined
 			},
 			{ jwt: session.access_token, fetch }
 		);

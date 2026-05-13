@@ -1,9 +1,11 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import pLimit from 'p-limit';
 import type { NormalizedPost, NormalizedProfile, Platform } from '@pulsetrack/shared-types';
 import { SupabaseService } from '../supabase/supabase.service';
 import { ApifyService } from './apify.client';
 import { computeEngagementRate, meanEngagementRate } from './engagement';
 import { InstagramNormalizer } from './instagram-normalizer';
+import { MediaRehosterService } from './media-rehoster.service';
 import { TikTokNormalizer } from './tiktok-normalizer';
 
 interface TrackedAccountRow {
@@ -29,6 +31,7 @@ export class ScraperService {
     private readonly apify: ApifyService,
     private readonly igNormalizer: InstagramNormalizer,
     private readonly tiktokNormalizer: TikTokNormalizer,
+    private readonly rehoster: MediaRehosterService,
   ) {}
 
   /**
@@ -57,6 +60,8 @@ export class ScraperService {
         throw new Error('Scraper returned no data');
       }
       const { profile, posts } = normalized;
+
+      await this.rehostMedia(profile, posts);
 
       const followers = profile.followersCount || account.followers_count || 0;
       const postEngagementRates = posts.map((p) =>
@@ -102,6 +107,46 @@ export class ScraperService {
     }
     const items = await this.apify.runTikTokScraper(account.username);
     return this.tiktokNormalizer.normalize(items);
+  }
+
+  /**
+   * Download each CDN URL (avatar, thumbnails, video files) and upload to the
+   * Supabase Storage `media` bucket. Mutates the normalized objects in place,
+   * replacing CDN URLs with Supabase public URLs. Failures fall back to the
+   * original CDN URL so a partial outage doesn't fail the whole scrape.
+   *
+   * TODO: nightly sweep of storage objects against current posts.platform_post_id
+   * to reclaim space when posts drop out of the latest-25 window.
+   */
+  private async rehostMedia(profile: NormalizedProfile, posts: NormalizedPost[]): Promise<void> {
+    const avatarKey = `tracked-avatars/${profile.platform}/${profile.username}.jpg`;
+    profile.avatarUrl = (await this.rehoster.rehostImage(profile.avatarUrl, avatarKey)) ?? profile.avatarUrl;
+
+    const limit = pLimit(4);
+    await Promise.all(
+      posts.map((post) =>
+        limit(async () => {
+          const base = `posts/${post.platform}/${post.platformPostId}`;
+          post.thumbnailUrl =
+            (await this.rehoster.rehostImage(post.thumbnailUrl, `${base}.jpg`)) ?? post.thumbnailUrl;
+          if (post.videoUrl) {
+            post.videoUrl =
+              (await this.rehoster.rehostVideo(post.videoUrl, `${base}.mp4`)) ?? post.videoUrl;
+          }
+          if (post.mediaUrls.length > 1) {
+            const inner = pLimit(3);
+            const rehosted = await Promise.all(
+              post.mediaUrls.map((url, idx) =>
+                inner(async () =>
+                  (await this.rehoster.rehostImage(url, `${base}-c${idx}.jpg`)) ?? url,
+                ),
+              ),
+            );
+            post.mediaUrls = rehosted;
+          }
+        }),
+      ),
+    );
   }
 
   private async createJob(trackedAccountId: string): Promise<string> {
@@ -183,6 +228,7 @@ export class ScraperService {
       caption: p.caption,
       thumbnail_url: p.thumbnailUrl,
       media_urls: p.mediaUrls,
+      video_url: p.videoUrl,
       likes_count: p.likesCount,
       comments_count: p.commentsCount,
       shares_count: p.sharesCount,

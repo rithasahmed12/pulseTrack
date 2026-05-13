@@ -5,7 +5,7 @@ import { PostsListQueryDto } from './dto/posts-list-query.dto';
 import { PostRow, toPost, toTopPost } from './posts.mapper';
 
 const SELECT_COLUMNS = `
-  id, platform, platform_post_id, post_type, caption, thumbnail_url,
+  id, platform, platform_post_id, post_type, caption, thumbnail_url, video_url, media_urls,
   likes_count, comments_count, shares_count, saves_count, views_count,
   engagement_rate, hashtags, posted_at, scraped_at,
   tracked_accounts!inner ( username, display_name )
@@ -33,6 +33,14 @@ export class PostsService {
     if (typeof query.minEngagement === 'number') q = q.gte('engagement_rate', query.minEngagement);
     if (query.dateFrom) q = q.gte('posted_at', query.dateFrom);
     if (query.dateTo) q = q.lte('posted_at', query.dateTo);
+    if (query.q) {
+      const term = query.q.trim();
+      if (term) {
+        const escaped = term.replace(/[,()*]/g, ' ');
+        const bare = term.replace(/^#/, '');
+        q = q.or(`caption.ilike.%${escaped}%,hashtags.cs.{${bare}}`);
+      }
+    }
 
     const sort = query.sortBy ?? 'posted-at';
     const sortColumn = sort === 'engagement' ? 'engagement_rate' : sort === 'likes' ? 'likes_count' : 'posted_at';

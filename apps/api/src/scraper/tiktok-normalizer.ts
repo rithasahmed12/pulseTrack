@@ -35,7 +35,8 @@ export class TikTokNormalizer {
   }
 
   private normalizePost(raw: RawTikTokItem): NormalizedPost {
-    const postType: NormalizedPost['postType'] = raw.isSlideshow ? 'photo' : 'video';
+    const postType: NormalizedPost['postType'] = raw.isSlideshow ? 'carousel' : 'video';
+    const videoUrl = raw.isSlideshow ? null : raw.mediaUrls?.[0] ?? null;
     return {
       platform: 'tiktok',
       platformPostId: raw.id,
@@ -43,6 +44,7 @@ export class TikTokNormalizer {
       caption: raw.text ?? null,
       thumbnailUrl: raw.videoMeta?.coverUrl ?? raw.videoMeta?.originalCoverUrl ?? null,
       mediaUrls: raw.mediaUrls ?? [],
+      videoUrl,
       likesCount: raw.diggCount ?? 0,
       commentsCount: raw.commentCount ?? 0,
       sharesCount: raw.shareCount ?? 0,

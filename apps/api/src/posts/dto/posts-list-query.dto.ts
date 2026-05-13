@@ -8,7 +8,18 @@ import type {
   TopPost,
 } from '@pulsetrack/shared-types';
 import { Type } from 'class-transformer';
-import { IsIn, IsInt, IsISO8601, IsNumber, IsOptional, IsUUID, Max, Min } from 'class-validator';
+import {
+  IsIn,
+  IsInt,
+  IsISO8601,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Max,
+  MaxLength,
+  Min,
+} from 'class-validator';
 
 export class PostsListQueryDto {
   @ApiPropertyOptional({ enum: ['all', 'photo', 'video', 'carousel', 'reel'], default: 'all' })
@@ -62,6 +73,12 @@ export class PostsListQueryDto {
   @IsOptional()
   @IsISO8601()
   dateTo?: string;
+
+  @ApiPropertyOptional({ description: 'Full-text search over caption + hashtags' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
+  q?: string;
 }
 
 export class PaginationDto implements Pagination {

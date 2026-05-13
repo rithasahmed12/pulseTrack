@@ -15,6 +15,8 @@ export interface PostRow {
   post_type: PostType;
   caption: string | null;
   thumbnail_url: string | null;
+  video_url: string | null;
+  media_urls: string[] | null;
   likes_count: number | null;
   comments_count: number | null;
   shares_count: number | null;
@@ -66,6 +68,8 @@ export function toPost(row: PostRow): Post {
     postedAt: row.posted_at,
     thumbnailUrl: row.thumbnail_url,
     thumbnailHue: hueFromId(row.id),
+    videoUrl: row.video_url ?? null,
+    mediaUrls: row.media_urls ?? [],
     engagementOverTime: engagementOverTime(rate),
   };
 }

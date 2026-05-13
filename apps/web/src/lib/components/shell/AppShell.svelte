@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
+	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
 	import Bell from '@lucide/svelte/icons/bell';
 	import Menu from '@lucide/svelte/icons/menu';
 	import Search from '@lucide/svelte/icons/search';
+	import X from '@lucide/svelte/icons/x';
 	import MainNav from './MainNav.svelte';
 	import UserMenu from './UserMenu.svelte';
 	import type { NavItem, UserMenuUser } from './types';
@@ -16,6 +18,7 @@
 		pageEyebrow?: string;
 		notificationCount?: number;
 		onNavigate?: (href: string) => void;
+		onSearch?: (query: string) => void;
 		onLogout?: () => void;
 	}
 
@@ -38,11 +41,21 @@
 		pageEyebrow = 'Workspace',
 		notificationCount = 0,
 		onNavigate,
+		onSearch,
 		onLogout
 	}: Props = $props();
 
 	let collapsed = $state(false);
 	let mobileOpen = $state(false);
+	let mobileSearchOpen = $state(false);
+	// svelte-ignore state_referenced_locally
+	let searchValue = $state(page.url.searchParams.get('q') ?? '');
+	let searchInputEl: HTMLInputElement | undefined = $state();
+	let mobileSearchInputEl: HTMLInputElement | undefined = $state();
+
+	$effect(() => {
+		searchValue = page.url.searchParams.get('q') ?? '';
+	});
 
 	const activeItem = $derived(navigationItems.find((i) => i.isActive));
 	const computedTitle = $derived(pageTitle ?? activeItem?.label ?? 'Dashboard');
@@ -52,6 +65,31 @@
 		onNavigate?.(href);
 	}
 
+	function submitSearch(event: SubmitEvent) {
+		event.preventDefault();
+		mobileSearchOpen = false;
+		onSearch?.(searchValue);
+	}
+
+	async function openMobileSearch() {
+		mobileSearchOpen = true;
+		await tick();
+		mobileSearchInputEl?.focus();
+	}
+
+	function clearSearch() {
+		searchValue = '';
+		searchInputEl?.focus();
+	}
+
+	function handleSidebarSearchClick() {
+		if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+			searchInputEl?.focus();
+		} else {
+			void openMobileSearch();
+		}
+	}
+
 	$effect(() => {
 		if (!mobileOpen) return;
 		const prev = document.body.style.overflow;
@@ -59,6 +97,24 @@
 		return () => {
 			document.body.style.overflow = prev;
 		};
+	});
+
+	onMount(() => {
+		function onKey(e: KeyboardEvent) {
+			if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+				e.preventDefault();
+				if (typeof window !== 'undefined' && window.innerWidth < 768) {
+					void openMobileSearch();
+				} else {
+					searchInputEl?.focus();
+					searchInputEl?.select();
+				}
+			} else if (e.key === 'Escape' && mobileSearchOpen) {
+				mobileSearchOpen = false;
+			}
+		}
+		document.addEventListener('keydown', onKey);
+		return () => document.removeEventListener('keydown', onKey);
 	});
 
 	onDestroy(() => {
@@ -100,6 +156,7 @@
 						{collapsed}
 						onToggleCollapsed={() => (collapsed = !collapsed)}
 						onNavigate={handleNavigate}
+						onSearchClick={handleSidebarSearchClick}
 					/>
 				</div>
 				<div class="border-t border-[#1E1E2E]/70">
@@ -126,7 +183,12 @@
 				class="fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col border-r border-[#1E1E2E] bg-[#0B0B12] backdrop-blur-xl lg:hidden"
 			>
 				<div class="flex-1 overflow-y-auto">
-					<MainNav items={navigationItems} collapsed={false} onNavigate={handleNavigate} />
+					<MainNav
+					items={navigationItems}
+					collapsed={false}
+					onNavigate={handleNavigate}
+					onSearchClick={handleSidebarSearchClick}
+				/>
 				</div>
 				<div class="border-t border-[#1E1E2E]/70">
 					<UserMenu
@@ -163,27 +225,47 @@
 						</h1>
 					</div>
 
-					<div class="relative ml-auto hidden w-full max-w-md md:block">
+					<form
+						role="search"
+						onsubmit={submitSearch}
+						class="relative ml-auto hidden w-full max-w-md md:block"
+					>
 						<Search
 							class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
 							aria-hidden="true"
 						/>
 						<input
+							bind:this={searchInputEl}
+							bind:value={searchValue}
 							type="search"
-							placeholder="Search profiles, posts, hashtags…"
+							name="q"
+							aria-label="Search posts"
+							placeholder="Search posts by caption or hashtag…"
 							class="h-9 w-full rounded-lg border border-[#1E1E2E] bg-[#0F0F18] pl-9 pr-14 text-[13px] text-slate-200 placeholder:text-slate-500 outline-none transition-all duration-200 focus:border-violet-500/50 focus:bg-[#13131E] focus:shadow-[0_0_0_3px_rgba(124,58,237,0.12)]"
 						/>
-						<kbd
-							class="font-mono pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border border-[#252535] bg-[#16161F] px-1.5 py-0.5 text-[10px] text-slate-500"
-							>⌘K</kbd
-						>
-					</div>
+						{#if searchValue}
+							<button
+								type="button"
+								aria-label="Clear search"
+								onclick={clearSearch}
+								class="absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-md text-slate-500 hover:bg-white/5 hover:text-slate-200"
+							>
+								<X class="h-3.5 w-3.5" />
+							</button>
+						{:else}
+							<kbd
+								class="font-mono pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border border-[#252535] bg-[#16161F] px-1.5 py-0.5 text-[10px] text-slate-500"
+								>⌘K</kbd
+							>
+						{/if}
+					</form>
 				</div>
 
 				<div class="flex items-center gap-1.5">
 					<button
 						type="button"
 						aria-label="Search"
+						onclick={openMobileSearch}
 						class="flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 hover:bg-white/5 hover:text-slate-100 md:hidden"
 					>
 						<Search class="h-4 w-4" />
@@ -214,6 +296,36 @@
 					<UserMenu {user} variant="header" onNavigate={handleNavigate} {onLogout} />
 				</div>
 			</header>
+
+			{#if mobileSearchOpen}
+				<div
+					class="sticky top-16 z-20 border-b border-[#1E1E2E] bg-[#0A0A0F]/95 px-4 py-2 backdrop-blur-xl md:hidden"
+				>
+					<form role="search" onsubmit={submitSearch} class="relative flex items-center gap-2">
+						<Search
+							class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
+							aria-hidden="true"
+						/>
+						<input
+							bind:this={mobileSearchInputEl}
+							bind:value={searchValue}
+							type="search"
+							name="q"
+							aria-label="Search posts"
+							placeholder="Search posts by caption or hashtag…"
+							class="h-9 w-full rounded-lg border border-[#1E1E2E] bg-[#0F0F18] pl-9 pr-3 text-[13px] text-slate-200 placeholder:text-slate-500 outline-none focus:border-violet-500/50 focus:bg-[#13131E] focus:shadow-[0_0_0_3px_rgba(124,58,237,0.12)]"
+						/>
+						<button
+							type="button"
+							aria-label="Close search"
+							onclick={() => (mobileSearchOpen = false)}
+							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-400 hover:bg-white/5 hover:text-slate-100"
+						>
+							<X class="h-4 w-4" />
+						</button>
+					</form>
+				</div>
+			{/if}
 
 			<main class="relative flex-1 overflow-y-auto">
 				<div class="mx-auto w-full max-w-[1320px] px-4 py-6 sm:px-6 sm:py-8 lg:px-8">

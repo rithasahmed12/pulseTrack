@@ -41,11 +41,15 @@
 
 	const user = $derived<UserMenuUser>({
 		name:
+			data.profile?.displayName ??
 			(data.user?.user_metadata?.display_name as string | undefined) ??
 			data.user?.email?.split('@')[0] ??
 			'Analyst',
 		handle: data.user?.email ?? undefined,
-		avatarUrl: data.user?.user_metadata?.avatar_url as string | undefined
+		avatarUrl:
+			data.profile?.avatarUrl ??
+			(data.user?.user_metadata?.avatar_url as string | undefined) ??
+			undefined
 	});
 
 	const pageEyebrow = $derived(
@@ -54,6 +58,11 @@
 
 	function handleNavigate(href: string) {
 		void goto(href);
+	}
+
+	function handleSearch(query: string) {
+		const q = query.trim();
+		void goto(q ? `/posts?q=${encodeURIComponent(q)}` : '/posts');
 	}
 
 	async function handleLogout() {
@@ -69,6 +78,7 @@
 	{pageEyebrow}
 	notificationCount={0}
 	onNavigate={handleNavigate}
+	onSearch={handleSearch}
 	onLogout={handleLogout}
 >
 	{@render children()}

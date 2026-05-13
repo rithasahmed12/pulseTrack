@@ -13,6 +13,7 @@
 	import Video from '@lucide/svelte/icons/video';
 	import type { Post } from '@pulsetrack/shared-types';
 	import { formatCount } from '$lib/components/profile/chart-utils';
+	import Carousel from './Carousel.svelte';
 	import MiniLineChart from './MiniLineChart.svelte';
 
 	interface Props {
@@ -153,7 +154,19 @@
 			<div class="grid min-h-0 flex-1 grid-cols-1 overflow-y-auto lg:grid-cols-[1.1fr_1fr]">
 				<div class="flex flex-col">
 					<div class="relative aspect-[4/5] sm:aspect-square lg:aspect-auto lg:flex-1">
-						{#if post.thumbnailUrl}
+						{#if (post.postType === 'video' || post.postType === 'reel') && post.videoUrl}
+							<!-- svelte-ignore a11y_media_has_caption -->
+							<video
+								controls
+								playsinline
+								preload="metadata"
+								poster={post.thumbnailUrl ?? undefined}
+								src={post.videoUrl}
+								class="absolute inset-0 h-full w-full bg-black object-contain"
+							></video>
+						{:else if post.postType === 'carousel' && (post.mediaUrls?.length ?? 0) > 0}
+							<Carousel slides={post.mediaUrls ?? []} alt={`Carousel by @${post.profileUsername}`} />
+						{:else if post.thumbnailUrl}
 							<img
 								src={post.thumbnailUrl}
 								alt=""

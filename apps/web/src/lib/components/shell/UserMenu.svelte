@@ -72,7 +72,7 @@
 		aria-label={user.name}
 	>
 		{#if user.avatarUrl}
-			<img src={user.avatarUrl} alt="" class="h-full w-full object-cover" />
+			<img src={user.avatarUrl} alt="" class="h-full w-full object-cover" referrerpolicy="no-referrer" />
 		{:else}
 			<span class="font-mono tracking-tight">{initials || '·'}</span>
 		{/if}

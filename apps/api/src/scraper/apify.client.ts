@@ -120,7 +120,8 @@ export class ApifyService {
       profileScrapeSections: ['videos'],
       profileSorting: 'latest',
       excludePinnedPosts: false,
-      shouldDownloadCovers: false,
+      shouldDownloadVideos: true,
+      shouldDownloadCovers: true,
       shouldDownloadAvatars: false,
       proxyCountryCode: 'None',
     });

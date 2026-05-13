@@ -302,6 +302,10 @@ export interface Post {
   postedAt: string;
   thumbnailUrl: string | null;
   thumbnailHue: number;
+  /** Supabase Storage URL of the rehosted reel/video. Null for photos and carousels. */
+  videoUrl: string | null;
+  /** Carousel slide URLs (Supabase Storage). Empty array for non-carousel posts. */
+  mediaUrls: string[];
   /** 7-day engagement-over-time series for the detail modal chart. */
   engagementOverTime: EngagementPoint[];
 }
@@ -498,6 +502,7 @@ export interface NormalizedPost {
   caption: string | null;
   thumbnailUrl: string | null;
   mediaUrls: string[];
+  videoUrl: string | null;
   likesCount: number;
   commentsCount: number;
   sharesCount: number | null;
