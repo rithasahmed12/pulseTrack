@@ -9,8 +9,25 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: false });
   const config = app.get(ConfigService<EnvVars, true>);
 
+  const frontendUrl = config.get('FRONTEND_URL', { infer: true });
+  const allowedOrigins = frontendUrl
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
   app.enableCors({
-    origin: config.get('FRONTEND_URL', { infer: true }),
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      if (!origin) return callback(null, true);
+      let isVercelPreview = false;
+      try {
+        isVercelPreview = /\.vercel\.app$/.test(new URL(origin).hostname);
+      } catch {
+        // malformed origin — fall through to deny
+      }
+      if (allowedOrigins.includes(origin) || isVercelPreview) {
+        return callback(null, true);
+      }
+      return callback(new Error(`CORS: origin ${origin} not allowed`), false);
+    },
     credentials: true,
   });
 

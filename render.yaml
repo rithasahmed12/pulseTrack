@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: pulsetrack-api
+    runtime: node
+    plan: free
+    region: frankfurt
+    rootDir: .
+    buildCommand: corepack enable && corepack prepare pnpm@11.1.1 --activate && pnpm install --frozen-lockfile && pnpm -F api build
+    startCommand: node apps/api/dist/main.js
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      - key: APIFY_API_TOKEN
+        sync: false
+      - key: CRON_SECRET
+        sync: false
